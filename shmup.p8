@@ -1,39 +1,59 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-
+-- todo: can you do different colors based on speed, fast moving stars become lines, and multiple bullets?
+-- next: https://www.youtube.com/watch?v=2httrC7c1m0&ab_channel=LazyDevs
 function _init()
- cls(0)
- --ship vars
- shipx=40
- shipy=40
- hspeed=1
- vspeed=1
- shipspr=17
- --bullet vars
- bulx=-10
- buly=-10
- bulspr=5
- --muzzle
- muzzle=0
-
- --game state
- score=30000
- lives=1
- bombs=2
-
- --star mapping
- starx={}
- stary={}
- starspd={}
- for i=1,100 do
-	add(starx,flr(rnd(128)))
-	add(stary,flr(rnd(128)))
-	add(starspd,rnd(1.5)+0.5)
- end
+ 	cls(0)
+	mode="start"
+	blinkt=1
 end
 
+function start_game()
+	mode="game"
+
+	 --ship vars
+ 	shipx=40
+ 	shipy=40
+ 	hspeed=1
+ 	vspeed=1
+ 	shipspr=17
+ 	--bullet vars
+ 	bulx=-10
+ 	buly=-10
+ 	bulspr=5
+ 	--muzzle
+ 	muzzle=0
+
+ 	--game state
+ 	score=30000
+ 	lives=1
+ 	bombs=2
+
+	--star mapping
+	starx={}
+	stary={}
+	starspd={}
+	for i=1,100 do
+		add(starx,flr(rnd(128)))
+		add(stary,flr(rnd(128)))
+		add(starspd,rnd(1.5)+0.5)
+	end
+end
+
+
 function _draw()
+	if mode=="game" then
+		draw_game()
+	elseif mode=="start" then
+		-- start screen
+		draw_start()
+	elseif mode=="over" then
+		draw_over()
+	end
+end
+
+function draw_game()
 	cls(0)
 	starfield()
 	spr(shipspr,shipx,shipy)
@@ -66,7 +86,72 @@ function _draw()
 	animatestars()
 end
 
+function draw_start()
+	cls(1)
+	print("new schmup game", 30, 40, 12)
+	print("press any key to start", 30, 80, blink())
+end
+
+function draw_over()
+	cls(8)
+	print("game over", 30, 40, 12)
+	print("press any key to continue", 30, 80, blink())
+end
+
 function _update()
+	blinkt+=1
+	if mode=="game" then
+		-- run game
+		update_game()
+	elseif mode=="start" then
+		update_start()
+	elseif mode=="over" then
+		update_over()
+	end
+end
+
+function update_over()
+	if btnp(4) or btnp(5) then
+		mode="start"
+	end
+end
+
+function update_start()
+	if btnp(4) or btnp(5) then
+		start_game()
+	end
+end
+
+-->8
+function starfield()
+	for i=1,#starx do
+		starcolor=7
+		if (i%2==0) then
+			starcolor=10
+		end
+		pset(starx[i],stary[i],starcolor)
+	end
+end
+
+function animatestars()
+	for i=1,#stary do
+		stary[i]=stary[i]+starspd[i]
+		if stary[i]>128 then
+			stary[i]=stary[i]-128
+		end
+	end
+end
+
+function blink()
+	local banim={5,5,6,6,7,7,6,6,5,5}
+
+	if blinkt > #banim then 
+		blinkt=1
+	end
+	return banim[blinkt]
+end
+-->8
+function update_game()
 	xspeed=0
  	yspeed=0
  	shipspr=17
@@ -89,6 +174,9 @@ function _update()
 		yspeed=2
 	end
 	
+	if btn(4) then
+		mode="over"
+	end
 	--fire bullet
 	if btn(5) then
 		buly=shipy-3
@@ -122,25 +210,6 @@ function _update()
 	
 	if shipy<0 then
 		shipy=0
-	end
-end
--->8
-function starfield()
-	for i=1,#starx do
-		starcolor=7
-		if (i%2==0) then
-			starcolor=10
-		end
-		pset(starx[i],stary[i],starcolor)
-	end
-end
-
-function animatestars()
-	for i=1,#stary do
-		stary[i]=stary[i]+starspd[i]
-		if stary[i]>128 then
-			stary[i]=stary[i]-128
-		end
 	end
 end
 __gfx__
