@@ -7,10 +7,11 @@ function _init()
  	cls(0)
 	mode="start"
 	blinkt=1
+	splashcnt=0
 end
 
-function start_game()
-	mode="game"
+function start_game()	
+	mode="splash"	
 
 	 --ship vars
  	shipx=40
@@ -48,6 +49,8 @@ function _draw()
 	elseif mode=="start" then
 		-- start screen
 		draw_start()
+	elseif mode=="splash" then
+		draw_splash()
 	elseif mode=="over" then
 		draw_over()
 	end
@@ -92,6 +95,11 @@ function draw_start()
 	print("press any key to start", 30, 80, blink())
 end
 
+function draw_splash()
+	cls(1)
+	print("level 1!", 30, 40, blink())
+end
+
 function draw_over()
 	cls(8)
 	print("game over", 30, 40, 12)
@@ -100,19 +108,33 @@ end
 
 function _update()
 	blinkt+=1
+	splashcnt+=1
 	if mode=="game" then
 		-- run game
 		update_game()
 	elseif mode=="start" then
 		update_start()
+	elseif mode=="splash" then
+		update_splash()
 	elseif mode=="over" then
 		update_over()
 	end
 end
 
+function update_splash()
+	if splashcnt<100 then
+		mode="splash"
+	else
+		mode="game"
+		splashcnt=0
+	end
+	
+end
+
 function update_over()
 	if btnp(4) or btnp(5) then
 		mode="start"
+		splashcnt=0
 	end
 end
 
