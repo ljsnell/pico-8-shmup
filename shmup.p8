@@ -28,11 +28,14 @@ function start_game()
 
  	--game state
  	score=30000
- 	lives=1
+ 	lives=3
  	bombs=2
 
 	--star mapping
 	stars={}
+
+	-- Bullets
+	buls={}
 
 	for i=1,100 do
 		local newstar={}
@@ -61,7 +64,11 @@ function draw_game()
 	cls(0)
 	starfield()
 	spr(shipspr,shipx,shipy)
-	spr(bulspr,bulx,buly)
+
+	for i=1,#buls do
+		local mybul=buls[i]
+		spr(bulspr,mybul.x,mybul.y)
+	end
 	
 	if muzzle>0 then
 		circfill(shipx+3,shipy-2,muzzle,7)
@@ -123,7 +130,7 @@ function _update()
 end
 
 function update_splash()
-	if splashcnt<100 then
+	if splashcnt<50 then
 		mode="splash"
 	else
 		mode="game"
@@ -203,9 +210,12 @@ function update_game()
 	end
 	--fire bullet
 	if btn(5) then
-		buly=shipy-3
-		bulx=shipx
-		sfx(0)
+		local newbul={}
+		newbul.x=shipx
+		newbul.y=shipy-3
+
+		add(buls,newbul)
+
 		muzzle=5
 	end
 	
@@ -213,8 +223,15 @@ function update_game()
 	shipx=shipx+xspeed
 	shipy=shipy+yspeed
 	
-	--move the bullet
-	buly=buly-3
+	--move the bullets
+	for i=#buls,1,-1 do
+		local mybul=buls[i]
+		mybul.y=mybul.y-3
+
+		if mybul.y<-8 then
+			del(buls,mybul)
+		end
+	end
 	
 	if muzzle>0 then
 		muzzle=muzzle-1
