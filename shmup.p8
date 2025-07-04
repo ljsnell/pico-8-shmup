@@ -32,13 +32,14 @@ function start_game()
  	bombs=2
 
 	--star mapping
-	starx={}
-	stary={}
-	starspd={}
+	stars={}
+
 	for i=1,100 do
-		add(starx,flr(rnd(128)))
-		add(stary,flr(rnd(128)))
-		add(starspd,rnd(1.5)+0.5)
+		local newstar={}
+		newstar.x=flr(rnd(128))
+		newstar.y=flr(rnd(128))
+		newstar.spd=rnd(1.5)+0.5
+		add(stars,newstar)
 	end
 end
 
@@ -146,20 +147,21 @@ end
 
 -->8
 function starfield()
-	for i=1,#starx do
+	for i=1,#stars do
 		starcolor=7
 		if (i%2==0) then
 			starcolor=10
 		end
-		pset(starx[i],stary[i],starcolor)
+		pset(stars[i].x,stars[i].y,starcolor)
 	end
 end
 
 function animatestars()
-	for i=1,#stary do
-		stary[i]=stary[i]+starspd[i]
-		if stary[i]>128 then
-			stary[i]=stary[i]-128
+	for i=1,#stars do
+		local mystar=stars[i]
+		mystar.y=mystar.y+mystar.spd
+		if mystar.y>128 then
+			mystar.y=mystar.y-128
 		end
 	end
 end
