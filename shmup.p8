@@ -9,20 +9,21 @@ function _init()
 	blinkt=1
 	splashcnt=0
 end
-
+-- update to account for using the drawspr for the ship.
+-- using the improved loop
+-- spawn multiple enemies (try 5 or 10 over time)
+-- Different types of enemies
 function start_game()
 	mode="splash"	
 
 	 --ship vars
- 	shipx=40
- 	shipy=40
- 	hspeed=1
- 	vspeed=1
- 	shipspr=17
+	ship={x=40,y=40,spr=17}
+
  	--bullet vars
  	bulx=-10
  	buly=-10
  	bulspr=5
+
  	--muzzle
  	muzzle=0
 
@@ -73,7 +74,7 @@ end
 function draw_game()
 	cls(0)
 	starfield()
-	spr(shipspr,shipx,shipy)
+	spr(ship.spr,ship.x,ship.y)
 
 	for i=1,#buls do
 		local mybul=buls[i]
@@ -81,7 +82,7 @@ function draw_game()
 	end
 	
 	if muzzle>0 then
-		circfill(shipx+3,shipy-2,muzzle,7)
+		circfill(ship.x+3,ship.y-2,muzzle,7)
 	end
 	
 	--ui
@@ -202,20 +203,39 @@ function drawspr(myspr)
 	spr(myspr.spr,myspr.x,myspr.y)
 end
 
+function col(a,b)
+	local a_left=a.x
+	local a_top=a.y
+	local a_right=a.x+7
+	local a_bottom=a.y+7
+
+	local b_left=b.x
+	local b_top=b.y
+	local b_right=b.x+7
+	local b_bottom=b.y+7
+
+	if a_top >b_bottom then return false end
+	if b_top >a_bottom then return false end
+	if a_left >b_right then return false end
+	if b_left >a_right then return false end	
+
+	return true
+end
+
 -->8
 function update_game()
 	xspeed=0
  	yspeed=0
- 	shipspr=17
+ 	ship.spr=17
 	
 	if btn(0) then
 		xspeed=-2
-		shipspr=16
+		ship.spr=16
 	end
 	
 	if btn(1) then
 		xspeed=2
-		shipspr=18	
+		ship.spr=18	
 	end
 	
 	if btn(2) then
@@ -229,11 +249,12 @@ function update_game()
 	if btn(4) then
 		mode="over"
 	end
+
 	--fire bullet
 	if btn(5) then
 		local newbul={}
-		newbul.x=shipx
-		newbul.y=shipy-3
+		newbul.x=ship.x
+		newbul.y=ship.y-3
 		newbul.spr=bulspr
 		add(buls,newbul)
 
@@ -241,8 +262,8 @@ function update_game()
 	end
 	
 	--moving the ship
-	shipx=shipx+xspeed
-	shipy=shipy+yspeed
+	ship.x=ship.x+xspeed
+	ship.y=ship.y+yspeed
 	
 	--move the bullets
 	for i=#buls,1,-1 do
@@ -255,7 +276,7 @@ function update_game()
 	end
 	
 	--moving enemies
-for myen in all(enemies) do		
+	for myen in all(enemies) do
 		myen.y+=1
 		myen.spr+=.1
 		if myen.spr > 24 then
@@ -265,26 +286,34 @@ for myen in all(enemies) do
 			del(enemies,myen)
 		end
 	end
+
+	-- collision detection
+	for myen in all(enemies) do
+		if col(myen,ship) then
+			lives-=1
+			sfx(1)
+		end
+	end
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
 		muzzle=muzzle-1
 	end
 
-	if shipx>120 then 
-		shipx=120
+	if ship.x>120 then 
+		ship.x=120
 	end
 	
-	if shipx<0 then
-		shipx=0
+	if ship.x<0 then
+		ship.x=0
 	end
 	
-	if shipy>120 then 
-		shipy=120
+	if ship.y>120 then 
+		ship.y=120
 	end
 	
-	if shipy<0 then
-		shipy=0
+	if ship.y<0 then
+		ship.y=0
 	end
 end
 __gfx__
@@ -306,3 +335,4 @@ __gfx__
 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000088880000888800000000000000000000000000
 __sfx__
 0001000037050360503405033050310502f050330502b05029050290502605023050220501f05016050190500405017050150500f0500c0500905006050020500105000000000010000000000010000500004000
+00030000316302e6302b630236302662021620226201b6201d6201963016630126300462001620000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000
