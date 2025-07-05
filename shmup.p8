@@ -247,7 +247,7 @@ function update_game()
 	end
 	
 	if btn(4) then
-		mode="over"
+
 	end
 
 	--fire bullet
@@ -292,8 +292,15 @@ function update_game()
 		if col(myen,ship) then
 			lives-=1
 			sfx(1)
+			del(enemies,myen)
 		end
 	end
+
+	-- check if died
+	if lives <=0 then
+		mode="over"
+	end
+	
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
