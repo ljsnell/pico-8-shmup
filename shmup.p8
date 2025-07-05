@@ -77,7 +77,7 @@ function draw_game()
 
 	for i=1,#buls do
 		local mybul=buls[i]
-		spr(bulspr,mybul.x,mybul.y)
+		drawspr(mybul)
 	end
 	
 	if muzzle>0 then
@@ -107,7 +107,7 @@ function draw_game()
 	-- enemies
 	for i=1,#enemies do
 		local myen=enemies[i]
-		spr(myen.spr,myen.x,myen.y)
+		drawspr(myen)
 	end
 
 	animatestars()
@@ -234,7 +234,7 @@ function update_game()
 		local newbul={}
 		newbul.x=shipx
 		newbul.y=shipy-3
-
+		newbul.spr=bulspr
 		add(buls,newbul)
 
 		muzzle=5
@@ -257,7 +257,6 @@ function update_game()
 	--moving enemies
 for myen in all(enemies) do		
 		myen.y+=1
-		-- myen.x+=rnd(2)-1
 		myen.spr+=.1
 		if myen.spr > 24 then
 			myen.spr=20
