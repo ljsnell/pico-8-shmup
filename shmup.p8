@@ -47,12 +47,16 @@ function start_game()
 	-- Bullets
 	buls={}
 	
+	spawnen()
+end
+
+function spawnen()
 	-- Enemies
 	enemies={}
 
 	local nenemy={}
-	nenemy.x=60
-	nenemy.y=5
+	nenemy.x=rnd(120)
+	nenemy.y=-8
 	nenemy.spr=20
 
 	add(enemies,nenemy)
@@ -287,6 +291,18 @@ function update_game()
 		end
 	end
 
+	-- collision enemies x bullets
+	for myen in all(enemies) do
+		for mybul in all(buls) do
+			if col(myen,mybul) then
+				del(enemies, myen)
+				del(buls, mybul)
+				sfx(2)
+				spawnen()
+			end
+		end
+	end
+
 	-- collision detection
 	for myen in all(enemies) do
 		if col(myen,ship) then
@@ -300,7 +316,7 @@ function update_game()
 	if lives <=0 then
 		mode="over"
 	end
-	
+
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
@@ -343,3 +359,4 @@ __gfx__
 __sfx__
 0001000037050360503405033050310502f050330502b05029050290502605023050220501f05016050190500405017050150500f0500c0500905006050020500105000000000010000000000010000500004000
 00030000316302e6302b630236302662021620226201b6201d6201963016630126300462001620000200000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00030000256500c6500a6501a650126500e6500865004650026500065000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
