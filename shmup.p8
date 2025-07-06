@@ -7,6 +7,7 @@ function _init()
  	cls(0)
 	mode="start"
 	blinkt=1
+	t=0
 	splashcnt=0
 end
 -- update to account for using the drawspr for the ship.
@@ -14,6 +15,7 @@ end
 -- spawn multiple enemies (try 5 or 10 over time)
 -- Different types of enemies
 function start_game()
+	t=0
 	mode="splash"	
 
 	 --ship vars
@@ -29,12 +31,12 @@ function start_game()
 
  	--game state
  	score=30000
- 	lives=3
+ 	lives=4
+	invul=0
  	bombs=2
 
 	--star mapping
 	stars={}
-
 	
 	for i=1,100 do
 		local newstar={}
@@ -78,7 +80,15 @@ end
 function draw_game()
 	cls(0)
 	starfield()
-	spr(ship.spr,ship.x,ship.y)
+
+	if invul<=0 then
+		drawspr(ship)
+	else
+		--invul state
+		if sin(t/10)<0 then
+			drawspr(ship)
+		end
+	end
 
 	for i=1,#buls do
 		local mybul=buls[i]
@@ -92,7 +102,7 @@ function draw_game()
 	--ui
 	print("score: "..score, 30,1,12)
 	-- lives
-	for i=1,3 do
+	for i=1,4 do
 		if lives>=i then
 			spr(11,i*9-8,1)
 		else
@@ -137,6 +147,7 @@ end
 
 function _update()
 	blinkt+=1
+	t+=1
 	splashcnt+=1
 	if mode=="game" then
 		-- run game
@@ -288,6 +299,7 @@ function update_game()
 		end
 		if myen.y>128 then
 			del(enemies,myen)
+			spawnen()
 		end
 	end
 
@@ -304,14 +316,18 @@ function update_game()
 	end
 
 	-- collision detection
-	for myen in all(enemies) do
-		if col(myen,ship) then
-			lives-=1
-			sfx(1)
-			del(enemies,myen)
+	if invul<=0 then
+		for myen in all(enemies) do
+			if col(myen,ship) then
+				lives-=1
+				sfx(1)
+				invul=30
+				-- del(enemies,myen)
+			end
 		end
+	else
+		invul-=1
 	end
-
 	-- check if died
 	if lives <=0 then
 		mode="over"
