@@ -31,7 +31,7 @@ function start_game()
  	muzzle=0
 
  	--game state
- 	score=30000
+ 	score=0
  	lives=4
 	invul=0
  	bombs=2
@@ -316,6 +316,7 @@ function update_game()
 				del(buls, mybul)
 				sfx(2)
 				spawnen()
+				score+=100
 			end
 		end
 	end
