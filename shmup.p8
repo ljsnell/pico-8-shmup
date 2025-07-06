@@ -8,6 +8,7 @@ function _init()
 	mode="start"
 	blinkt=1
 	t=0
+	bultimer=0
 	splashcnt=0
 end
 -- update to account for using the drawspr for the ship.
@@ -85,7 +86,7 @@ function draw_game()
 		drawspr(ship)
 	else
 		--invul state
-		if sin(t/10)<0 then
+		if sin(t/5)<0.1 then
 			drawspr(ship)
 		end
 	end
@@ -267,14 +268,18 @@ function update_game()
 
 	--fire bullet
 	if btn(5) then
-		local newbul={}
-		newbul.x=ship.x
-		newbul.y=ship.y-3
-		newbul.spr=bulspr
-		add(buls,newbul)
-
-		muzzle=5
+		if bultimer<=0 then
+			local newbul={}
+			newbul.x=ship.x
+			newbul.y=ship.y-3
+			newbul.spr=bulspr
+			add(buls,newbul)		
+			sfx(0)
+			bultimer=6
+			muzzle=5
+		end
 	end
+	bultimer-=1
 	
 	--moving the ship
 	ship.x=ship.x+xspeed
@@ -321,7 +326,7 @@ function update_game()
 			if col(myen,ship) then
 				lives-=1
 				sfx(1)
-				invul=30
+				invul=45
 				-- del(enemies,myen)
 			end
 		end
