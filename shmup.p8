@@ -3,6 +3,7 @@ version 42
 __lua__
 -- todo: can you do different colors based on speed, fast moving stars become lines, and multiple bullets?
 -- next: https://www.youtube.com/watch?v=2httrC7c1m0&ab_channel=LazyDevs
+-- change enemy sprite when hit/explosion
 function _init()
  	cls(0)
 	mode="start"
