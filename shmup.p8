@@ -74,6 +74,7 @@ function explode(expx,expy)
 	local myex={}
 	myex.x=expx
 	myex.y=expy
+	myex.life=10
 
 	add(explosionarr, myex)
 end
@@ -116,6 +117,10 @@ function draw_game()
 	-- drawing explosions
 	for myex in all(explosionarr) do
 		spr(64,myex.x,myex.y,2,2)
+		myex.life-=1
+		if myex.life<=0 then
+			del(explosionarr,myex)
+		end
 	end
 
 	--ui
