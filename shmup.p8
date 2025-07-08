@@ -63,6 +63,7 @@ function spawnen()
 	nenemy.y=-8
 	nenemy.spr=20
 	nenemy.hp=5
+	nenemy.flash=0
 
 	add(enemies,nenemy)
 end
@@ -123,9 +124,13 @@ function draw_game()
 	end
 	
 	-- enemies
-	for i=1,#enemies do
-		local myen=enemies[i]
+	for myen in all(enemies) do
+		if myen.flash>0 then
+			myen.flash-=1
+			pal(7, 14)
+		end
 		drawspr(myen)
+		pal()
 	end
 
 	animatestars()
@@ -317,7 +322,8 @@ function update_game()
 				del(buls, mybul)
 				myen.hp-=1
 				sfx(3)
-				
+				myen.flash=30
+
 				if myen.hp<=0 then
 					del(enemies, myen)
 					sfx(2)
