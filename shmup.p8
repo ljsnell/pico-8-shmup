@@ -74,7 +74,7 @@ function explode(expx,expy)
 	local myex={}
 	myex.x=expx
 	myex.y=expy
-	myex.age=10
+	myex.age=1
 
 	add(explosionarr, myex)
 end
@@ -115,11 +115,11 @@ function draw_game()
 	end
 	
 	-- drawing explosions
-	local exframes={64,66,68,70,72,74}
+	local exframes={64,64,66,66,68,70,72,74}
 	for myex in all(explosionarr) do
-		spr(exframes[myex.age],myex.x,myex.y,2,2)
-		myex.age+=1
-		if myex.age>5 then
+		spr(exframes[flr(myex.age)],myex.x,myex.y,2,2)
+		myex.age+=0.5
+		if myex.age>#exframes then
 			del(explosionarr,myex)
 		end
 	end
