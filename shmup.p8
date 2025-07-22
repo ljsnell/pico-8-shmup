@@ -52,6 +52,8 @@ function start_game()
 	buls={}
 	-- explosions
 	explosionarr={}
+	-- particles
+	parts={}
 
 	spawnen()
 end
@@ -71,12 +73,34 @@ function spawnen()
 end
 
 function explode(expx,expy)
-	local myex={}
-	myex.x=expx
-	myex.y=expy
-	myex.age=1
+	-- local myex={}
+	-- myex.x=expx
+	-- myex.y=expy
+	-- myex.age=1
 
-	add(explosionarr, myex)
+	-- add(explosionarr, myex)
+	local myp={}
+	myp.x=expx
+	myp.y=expy
+	myp.sx=0
+	myp.sy=0
+	myp.age=0
+	myp.size=8
+	myp.maxage=0
+	add(parts,myp)
+
+	for i=1,20 do
+		local myp={}
+		myp.x=expx
+		myp.y=expy
+		myp.sx=rnd()*6-3
+		myp.sy=rnd()*6-3
+		myp.age=rnd(5)
+		myp.size=1+rnd(2)
+		myp.maxage=30+rnd(20)
+
+		add(parts,myp)
+	end
 end
 
 function _draw()
@@ -115,15 +139,40 @@ function draw_game()
 	end
 	
 	-- drawing explosions
-	local exframes={64,64,66,66,68,70,72,74}
-	for myex in all(explosionarr) do
-		spr(exframes[flr(myex.age)],myex.x,myex.y,2,2)
-		myex.age+=0.5
-		if myex.age>#exframes then
-			del(explosionarr,myex)
+	-- 1. spawn enemies with color/pallatte swaps (pal())
+	-- 2. apply flashing to when the player gets hit
+	-- 3. bullet explosion on impact
+	
+
+	-- drawing particles
+	for myp in all(parts) do
+		local pc=7
+		if myp.age>5 then
+			pc=10
+		end
+		if myp.age>10 then
+			pc=9
+		end
+		if myp.age>15 then
+			pc=2
+		end
+
+		circfill(myp.x,myp.y,myp.size,pc)
+		myp.x+=myp.sx
+		myp.y+=myp.sy
+		
+		myp.sx=myp.sx*0.85
+		myp.sy=myp.sy*0.85
+
+		myp.age+=1
+
+		if myp.age>myp.maxage then
+			myp.size-=0.5
+			if myp.size<0 then				
+				del(parts,myp)
+			end
 		end
 	end
-
 	--ui
 	print("score: "..score, 30,1,12)
 	-- lives
@@ -348,7 +397,7 @@ function update_game()
 				myen.flash=5
 
 				if myen.hp<=0 then
-					explode(myen.x,myen.y)
+					explode(myen.x+4,myen.y+4)
 					del(enemies, myen)
 					sfx(2)
 					spawnen()
