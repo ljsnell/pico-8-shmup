@@ -72,7 +72,7 @@ function spawnen()
 	add(enemies,nenemy)
 end
 
-function explode(expx,expy)
+function explode(expx,expy,isblue)
 	-- local myex={}
 	-- myex.x=expx
 	-- myex.y=expy
@@ -87,6 +87,7 @@ function explode(expx,expy)
 	myp.age=0
 	myp.size=8
 	myp.maxage=0
+	myp.blue=isblue
 	add(parts,myp)
 
 	for i=1,20 do
@@ -98,6 +99,7 @@ function explode(expx,expy)
 		myp.age=rnd(5)
 		myp.size=1+rnd(2)
 		myp.maxage=30+rnd(20)
+		myp.blue=isblue
 
 		add(parts,myp)
 	end
@@ -147,6 +149,9 @@ function draw_game()
 	-- drawing particles
 	for myp in all(parts) do
 		local pc=page_red(myp.age)
+		if myp.blue then
+			pc=12
+		end
 
 		circfill(myp.x,myp.y,myp.size,pc)
 		myp.x+=myp.sx
@@ -415,6 +420,7 @@ function update_game()
 	if invul<=0 then
 		for myen in all(enemies) do
 			if col(myen,ship) then
+				explode(ship.x+4, ship.y+4, true)
 				lives-=1
 				sfx(1)
 				invul=45
