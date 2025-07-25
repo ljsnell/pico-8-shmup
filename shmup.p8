@@ -54,6 +54,7 @@ function start_game()
 	explosionarr={}
 	-- particles
 	parts={}
+	shwaves={}
 
 	spawnen()
 end
@@ -105,6 +106,14 @@ function explode(expx,expy,isblue)
 	end
 end
 
+function smol_shwave(shx,shy)
+	local mysw={}
+	mysw.x=shx
+	mysw.y=shy
+	mysw.r=5
+	add(shwaves,mysw)
+end
+
 function _draw()
 	if mode=="game" then
 		draw_game()
@@ -138,6 +147,11 @@ function draw_game()
 	
 	if muzzle>0 then
 		circfill(ship.x+3,ship.y-2,muzzle,7)
+	end
+
+	-- drawing swaves
+	for mysw in all(shwaves) do
+		circ(mysw.x,mysw.y,mysw.r,7)
 	end
 	
 	-- drawing explosions
@@ -416,6 +430,7 @@ function update_game()
 		for mybul in all(buls) do
 			if col(myen,mybul) then
 				del(buls, mybul)
+				smol_shwave(mybul.x, mybul.y)
 				myen.hp-=1
 				sfx(3)
 				myen.flash=5
