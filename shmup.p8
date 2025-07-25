@@ -110,7 +110,8 @@ function smol_shwave(shx,shy)
 	local mysw={}
 	mysw.x=shx
 	mysw.y=shy
-	mysw.r=5
+	mysw.r=1
+	mysw.tr=5
 	add(shwaves,mysw)
 end
 
@@ -152,6 +153,10 @@ function draw_game()
 	-- drawing swaves
 	for mysw in all(shwaves) do
 		circ(mysw.x,mysw.y,mysw.r,7)
+		mysw.r+=1
+		if mysw.r>mysw.tr then
+			del(shwaves,mysw)
+		end
 	end
 	
 	-- drawing explosions
@@ -430,7 +435,7 @@ function update_game()
 		for mybul in all(buls) do
 			if col(myen,mybul) then
 				del(buls, mybul)
-				smol_shwave(mybul.x, mybul.y)
+				smol_shwave(mybul.x+4, mybul.y+4)
 				myen.hp-=1
 				sfx(3)
 				myen.flash=5
