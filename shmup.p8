@@ -146,16 +146,7 @@ function draw_game()
 
 	-- drawing particles
 	for myp in all(parts) do
-		local pc=7
-		if myp.age>5 then
-			pc=10
-		end
-		if myp.age>10 then
-			pc=9
-		end
-		if myp.age>15 then
-			pc=2
-		end
+		local pc=page_red(myp.age)
 
 		circfill(myp.x,myp.y,myp.size,pc)
 		myp.x+=myp.sx
@@ -206,6 +197,19 @@ function draw_game()
 	end
 
 	animatestars()
+end
+
+function page_red(page)
+	if page>5 then
+		pc=10
+	end
+	if page>10 then
+		pc=9
+	end
+	if page>15 then
+		pc=2
+	end
+	return pc
 end
 
 function draw_start()
