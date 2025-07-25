@@ -150,7 +150,9 @@ function draw_game()
 	for myp in all(parts) do
 		local pc=page_red(myp.age)
 		if myp.blue then
-			pc=12
+			pc=page_blue(myp.age)
+		else
+			pc=page_red(myp.age)
 		end
 
 		circfill(myp.x,myp.y,myp.size,pc)
@@ -213,6 +215,19 @@ function page_red(page)
 	end
 	if page>15 then
 		pc=2
+	end
+	return pc
+end
+
+function page_blue(page)
+	if page>5 then
+		pc=6
+	end
+	if page>10 then
+		pc=13
+	end
+	if page>15 then
+		pc=1	
 	end
 	return pc
 end
