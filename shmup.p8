@@ -114,6 +114,7 @@ function smol_shwave(shx,shy)
 	mysw.r=1
 	mysw.tr=5
 	mysw.col=9
+	mysw.speed=1
 	add(shwaves,mysw)
 end
 
@@ -124,6 +125,7 @@ function big_shwave(shx,shy)
 	mysw.r=1
 	mysw.tr=30
 	mysw.col=9
+	mysw.speed=3
 	add(shwaves,mysw)
 end
 
@@ -165,7 +167,7 @@ function draw_game()
 	-- drawing swaves
 	for mysw in all(shwaves) do
 		circ(mysw.x,mysw.y,mysw.r,mysw.col)
-		mysw.r+=1
+		mysw.r+=mysw.speed
 		if mysw.r>mysw.tr then
 			del(shwaves,mysw)
 		end
