@@ -101,6 +101,7 @@ function explode(expx,expy,isblue)
 		myp.size=1+rnd(2)
 		myp.maxage=30+rnd(20)
 		myp.blue=isblue
+		myp.spark=true
 
 		add(parts,myp)
 	end
@@ -188,7 +189,11 @@ function draw_game()
 			pc=page_red(myp.age)
 		end
 
-		circfill(myp.x,myp.y,myp.size,pc)
+		if myp.spark then
+			pset(myp.x,myp.y,7)
+		else
+			circfill(myp.x,myp.y,myp.size,pc)
+		end
 		myp.x+=myp.sx
 		myp.y+=myp.sy
 		
