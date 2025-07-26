@@ -104,6 +104,7 @@ function explode(expx,expy,isblue)
 
 		add(parts,myp)
 	end
+	big_shwave(expx,expy)
 end
 
 function smol_shwave(shx,shy)
@@ -112,6 +113,17 @@ function smol_shwave(shx,shy)
 	mysw.y=shy
 	mysw.r=1
 	mysw.tr=5
+	mysw.col=9
+	add(shwaves,mysw)
+end
+
+function big_shwave(shx,shy)
+	local mysw={}
+	mysw.x=shx
+	mysw.y=shy
+	mysw.r=1
+	mysw.tr=30
+	mysw.col=9
 	add(shwaves,mysw)
 end
 
@@ -152,7 +164,7 @@ function draw_game()
 
 	-- drawing swaves
 	for mysw in all(shwaves) do
-		circ(mysw.x,mysw.y,mysw.r,7)
+		circ(mysw.x,mysw.y,mysw.r,mysw.col)
 		mysw.r+=1
 		if mysw.r>mysw.tr then
 			del(shwaves,mysw)
