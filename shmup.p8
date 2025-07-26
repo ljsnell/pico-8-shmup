@@ -95,8 +95,8 @@ function explode(expx,expy,isblue)
 		local myp={}
 		myp.x=expx
 		myp.y=expy
-		myp.sx=rnd()*6-3
-		myp.sy=rnd()*6-3
+		myp.sy=(rnd()-0.5)*10
+		myp.sx=(rnd()-0.5)*10
 		myp.age=rnd(5)
 		myp.size=1+rnd(2)
 		myp.maxage=30+rnd(20)
