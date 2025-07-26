@@ -130,6 +130,21 @@ function big_shwave(shx,shy)
 	add(shwaves,mysw)
 end
 
+function smol_spark(sx,sy)
+	local myp={}
+	myp.x=sx
+	myp.y=sy
+	myp.sy=(rnd()-1)*3
+	myp.sx=(rnd()-0.5)*8
+	myp.age=rnd(5)
+	myp.size=1+rnd(2)
+	myp.maxage=30+rnd(20)
+	myp.blue=isblue
+	myp.spark=true
+
+	add(parts,myp)
+end
+
 function _draw()
 	if mode=="game" then
 		draw_game()
@@ -455,6 +470,7 @@ function update_game()
 			if col(myen,mybul) then
 				del(buls, mybul)
 				smol_shwave(mybul.x+4, mybul.y+4)
+				smol_spark(myen.x+4, myen.y+4)
 				myen.hp-=1
 				sfx(3)
 				myen.flash=5
