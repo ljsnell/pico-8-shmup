@@ -11,6 +11,8 @@ function _init()
 	t=0
 	bultimer=0
 	splashcnt=0
+	wave=1
+	wavetime=70
 end
 -- update to account for using the drawspr for the ship.
 -- using the improved loop
@@ -153,6 +155,8 @@ function _draw()
 		draw_start()
 	elseif mode=="splash" then
 		draw_splash()
+	elseif mode=="wavetext" then
+		draw_wavetext()
 	elseif mode=="over" then
 		draw_over()
 	end
@@ -296,6 +300,11 @@ function draw_splash()
 	print("level 1!", 30, 40, blink())
 end
 
+function draw_wavetext()
+	draw_game()
+	print("wave "..wave,56,40,blink())
+end
+
 function draw_over()
 	cls(8)
 	print("game over", 30, 40, 12)
@@ -313,6 +322,8 @@ function _update()
 		update_start()
 	elseif mode=="splash" then
 		update_splash()
+	elseif mode=="wavetext" then
+		update_wavetext()
 	elseif mode=="over" then
 		update_over()
 	end
@@ -322,7 +333,7 @@ function update_splash()
 	if splashcnt<20 then
 		mode="splash"
 	else
-		mode="game"
+		mode="wavetext"
 		splashcnt=0
 	end
 	
@@ -333,6 +344,14 @@ function update_over()
 		mode="start"
 		splashcnt=0
 	end
+end
+
+function update_wavetext()
+	 update_game()
+	 wavetime-=1
+	 if wavetime<=0 then
+		mode="game"
+	 end
 end
 
 function update_start()
