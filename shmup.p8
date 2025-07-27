@@ -11,7 +11,6 @@ function _init()
 	t=0
 	bultimer=0
 	splashcnt=0
-	wave=0
 	wavetime=70
 end
 -- update to account for using the drawspr for the ship.
@@ -19,6 +18,7 @@ end
 -- spawn multiple enemies (try 5 or 10 over time)
 -- Different types of enemies
 function start_game()
+	wave=0
 	t=0
 	mode="splash"	
 	
@@ -342,8 +342,10 @@ function _update()
 		update_splash()
 	elseif mode=="wavetext" then
 		update_wavetext()
-	elseif mode=="over" or mode=="win" then
+	elseif mode=="over" then
 		update_over()
+	elseif mode=="win" then
+		update_win()
 	end
 end
 
@@ -358,9 +360,30 @@ function update_splash()
 end
 
 function update_over()
-	if btnp(4) or btnp(5) then
-		mode="start"
-		splashcnt=0
+	if btn(4)==false and btn(5)==false then
+		btnreleased=true
+	end
+
+	if btnreleased then
+		if btnp(4) or btnp(5) then
+			mode="start"
+			splashcnt=0
+			btnreleased=false
+		end
+	end
+end
+
+function update_win()
+	if btn(4)==false and btn(5)==false then
+		btnreleased=true
+	end
+
+	if btnreleased then
+		if btnp(4) or btnp(5) then
+			mode="start"
+			splashcnt=0
+			btnreleased=false
+		end
 	end
 end
 
