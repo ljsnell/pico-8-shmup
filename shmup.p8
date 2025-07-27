@@ -11,7 +11,7 @@ function _init()
 	t=0
 	bultimer=0
 	splashcnt=0
-	wave=1
+	wave=0
 	wavetime=70
 end
 -- update to account for using the drawspr for the ship.
@@ -21,24 +21,24 @@ end
 function start_game()
 	t=0
 	mode="splash"	
-
-	 --ship vars
+	
+	--ship vars
 	ship={x=40,y=40,spr=17}
-
- 	--bullet vars
- 	bulx=-10
- 	buly=-10
- 	bulspr=5
-
- 	--muzzle
- 	muzzle=0
-
- 	--game state
- 	score=0
- 	lives=4
+	
+	--bullet vars
+	bulx=-10
+	buly=-10
+	bulspr=5
+	
+	--muzzle
+	muzzle=0
+	
+	--game state
+	score=0
+	lives=4
 	invul=0
- 	bombs=2
-
+	bombs=2
+	
 	--star mapping
 	stars={}
 	
@@ -57,8 +57,8 @@ function start_game()
 	-- particles
 	parts={}
 	shwaves={}
-
-	spawnen()
+	
+	nextwave()
 end
 
 function spawnen()
@@ -73,6 +73,22 @@ function spawnen()
 	nenemy.flash=0
 
 	add(enemies,nenemy)
+end
+
+--waves and enemies
+function spawnwave()
+	spawnen()
+end
+
+function nextwave()
+	wave+=1
+
+	if wave>4 then
+		mode="win"
+	else
+		wavetime=80
+		mode="wavetext"
+	end
 end
 
 function explode(expx,expy,isblue)
@@ -159,6 +175,8 @@ function _draw()
 		draw_wavetext()
 	elseif mode=="over" then
 		draw_over()
+	elseif mode=="win" then
+		draw_win()
 	end
 end
 
@@ -305,9 +323,9 @@ function draw_wavetext()
 	print("wave "..wave,56,40,blink())
 end
 
-function draw_over()
-	cls(8)
-	print("game over", 30, 40, 12)
+function draw_win()
+	cls(11)
+	print("a winner is u!", 30, 40, 12)
 	print("press any key to continue", 30, 80, blink())
 end
 
@@ -324,7 +342,7 @@ function _update()
 		update_splash()
 	elseif mode=="wavetext" then
 		update_wavetext()
-	elseif mode=="over" then
+	elseif mode=="over" or mode=="win" then
 		update_over()
 	end
 end
@@ -351,6 +369,7 @@ function update_wavetext()
 	 wavetime-=1
 	 if wavetime<=0 then
 		mode="game"
+		spawnwave()
 	 end
 end
 
@@ -498,8 +517,11 @@ function update_game()
 					explode(myen.x+4,myen.y+4)
 					del(enemies, myen)
 					sfx(2)
-					spawnen()
 					score+=100
+
+					if #enemies==0 then
+						nextwave()
+					end
 				end
 			end
 		end
