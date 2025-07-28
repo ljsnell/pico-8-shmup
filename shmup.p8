@@ -184,22 +184,24 @@ function draw_game()
 	cls(0)
 	starfield()
 
-	if invul<=0 then
-		drawspr(ship)
-	else
-		--invul state
-		if sin(t/5)<0.1 then
+	if lives>0 then
+		if invul<=0 then
 			drawspr(ship)
+		else
+			--invul state
+			if sin(t/5)<0.1 then
+				drawspr(ship)
+			end
 		end
-	end
 
-	for i=1,#buls do
-		local mybul=buls[i]
-		drawspr(mybul)
-	end
-	
-	if muzzle>0 then
-		circfill(ship.x+3,ship.y-2,muzzle,7)
+		for i=1,#buls do
+			local mybul=buls[i]
+			drawspr(mybul)
+		end
+
+		if muzzle>0 then
+			circfill(ship.x+3,ship.y-2,muzzle,7)
+		end
 	end
 
 	-- drawing swaves
@@ -321,6 +323,12 @@ end
 function draw_wavetext()
 	draw_game()
 	print("wave "..wave,56,40,blink())
+end
+
+function draw_over()
+	draw_game()
+	print("game over",48,40,8)
+	print("press any key to continue", 30, 80, blink())
 end
 
 function draw_win()
