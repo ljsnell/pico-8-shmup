@@ -23,7 +23,7 @@ function start_game()
 	mode="splash"	
 	
 	--ship vars
-	ship={x=40,y=40,spr=17}
+	ship={x=40,y=40,spr=17,sprw=1,sprh=1}
 	
 	--bullet vars
 	bulx=-10
@@ -70,6 +70,8 @@ function spawnen(entype)
 	myen.y=-8
 	myen.flash=0
 	myen.aniframe=1
+	myen.sprh=1
+	myen.sprw=1
 
 	if entype==nil or entype==1 then
 		-- green alien
@@ -91,6 +93,8 @@ function spawnen(entype)
 		myen.spr=208
 		myen.hp=5
 		myen.ani={208,210}
+		myen.sprh=2
+		myen.sprw=2
 	end
 
 	add(enemies,myen)
@@ -289,7 +293,7 @@ function draw_game()
 		end
 	end
 	
-	-- enemies
+	-- drawing enemies
 	for myen in all(enemies) do
 		if myen.flash>0 then
 			myen.flash-=1
@@ -462,7 +466,7 @@ function blink()
 end
 
 function drawspr(myspr)
-	spr(myspr.spr,myspr.x,myspr.y)
+	spr(myspr.spr,myspr.x,myspr.y,myspr.sprw,myspr.sprh)
 end
 
 function col(a,b)
@@ -519,6 +523,8 @@ function update_game()
 			newbul.x=ship.x
 			newbul.y=ship.y-3
 			newbul.spr=bulspr
+			newbul.sprw=1
+			newbul.sprh=1
 			add(buls,newbul)		
 			sfx(0)
 			bultimer=6
