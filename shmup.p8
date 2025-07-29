@@ -1,6 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+#include waves.p8
+
 -- todo: can you do different colors based on speed, fast moving stars become lines, and multiple bullets?
 -- next: https://www.youtube.com/watch?v=2httrC7c1m0&ab_channel=LazyDevs
 -- change enemy sprite when hit/explosion
@@ -59,61 +61,6 @@ function start_game()
 	shwaves={}
 	
 	nextwave()
-end
-
-function spawnen(entype)
-	-- enemies
-	enemies={}
-
-	local myen={}
-	myen.x=rnd(120)
-	myen.y=-8
-	myen.flash=0
-	myen.aniframe=1
-	myen.sprh=1
-	myen.sprw=1
-
-	if entype==nil or entype==1 then
-		-- green alien
-		myen.spr=20
-		myen.hp=5
-		myen.ani={20,21,22,23}
-	elseif entype==2 then
-		-- red flame
-		myen.spr=148
-		myen.hp=5
-		myen.ani={148,149}
-	elseif entype==3 then
-		-- spinning ship
-		myen.spr=184
-		myen.hp=5
-		myen.ani={184,185,186,187}
-	elseif entype==4 then
-		-- boss
-		myen.spr=208
-		myen.hp=5
-		myen.ani={208,210}
-		myen.sprh=2
-		myen.sprw=2
-	end
-
-	add(enemies,myen)
-end
-
---waves and enemies
-function spawnwave()
-	spawnen(wave)
-end
-
-function nextwave()
-	wave+=1
-
-	if wave>4 then
-		mode="win"
-	else
-		wavetime=80
-		mode="wavetext"
-	end
 end
 
 function explode(expx,expy,isblue)
