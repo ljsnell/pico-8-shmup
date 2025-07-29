@@ -69,23 +69,28 @@ function spawnen(entype)
 	myen.x=rnd(120)
 	myen.y=-8
 	myen.flash=0
+	myen.aniframe=1
 
 	if entype==nil or entype==1 then
 		-- green alien
 		myen.spr=20
 		myen.hp=5
+		myen.ani={20,21,22,23}
 	elseif entype==2 then
 		-- red flame
 		myen.spr=148
 		myen.hp=5
+		myen.ani={148,149}
 	elseif entype==3 then
 		-- spinning ship
 		myen.spr=184
 		myen.hp=5
+		myen.ani={184,185,186,187}
 	elseif entype==4 then
 		-- boss
 		myen.spr=208
 		myen.hp=5
+		myen.ani={208,210}
 	end
 
 	add(enemies,myen)
@@ -539,11 +544,11 @@ function update_game()
 	--moving enemies
 	for myen in all(enemies) do
 		myen.y+=1
-		--myen.spr+=.1
-		--if myen.spr > 24 then
-		--	myen.spr=20
-		--end
-
+		myen.aniframe+=0.4
+		if flr(myen.aniframe)>#myen.ani then
+			myen.aniframe=1
+		end
+		myen.spr=myen.ani[flr(myen.aniframe)]
 
 		if myen.y>128 then			
 			del(enemies,myen)
