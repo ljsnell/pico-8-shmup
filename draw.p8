@@ -40,6 +40,7 @@ function draw_game()
 
 		if muzzle>0 then
 			circfill(ship.x+3,ship.y-2,muzzle,7)
+			circfill(ship.x+4,ship.y-2,muzzle,7)
 		end
 	end
 

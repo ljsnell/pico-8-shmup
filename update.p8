@@ -119,7 +119,7 @@ function update_game()
 			add(buls,newbul)		
 			sfx(0)
 			bultimer=6
-			muzzle=5
+			muzzle=4
 		end
 	end
 	bultimer-=1
