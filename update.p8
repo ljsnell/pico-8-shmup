@@ -32,6 +32,10 @@ function update_splash()
 end
 
 function update_over()
+	if t<lockout then
+		return
+	end
+
 	if btn(4)==false and btn(5)==false then
 		btnreleased=true
 	end
@@ -46,6 +50,10 @@ function update_over()
 end
 
 function update_win()
+	if t<lockout then
+		return
+	end
+
 	if btn(4)==false and btn(5)==false then
 		btnreleased=true
 	end
@@ -184,6 +192,7 @@ function update_game()
 	-- check if died
 	if lives <=0 then
 		mode="over"
+		lockout=t+30
 	end
 
 	-- Maybe spawn double enemies everytime an enemy gets killed?

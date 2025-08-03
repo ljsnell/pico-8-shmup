@@ -48,6 +48,7 @@ function nextwave()
 
 	if wave>4 then
 		mode="win"
+		lockout=t+30
 	else
 		wavetime=80
 		mode="wavetext"
