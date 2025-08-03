@@ -31,7 +31,10 @@ function start_game()
 	mode="splash"	
 	
 	--ship vars
-	ship={x=40,y=40,spr=17,sprw=1,sprh=1}
+	ship=make_spr()
+	ship.x=40
+	ship.y=40
+	ship.spr=17
 	
 	--bullet vars
 	bulx=-10
@@ -51,7 +54,7 @@ function start_game()
 	stars={}
 	
 	for i=1,100 do
-		local newstar={}
+		local newstar=make_spr()
 		newstar.x=flr(rnd(128))
 		newstar.y=flr(rnd(128))
 		newstar.spd=rnd(1.5)+0.5
@@ -105,13 +108,13 @@ end
 function col(a,b)
 	local a_left=a.x
 	local a_top=a.y
-	local a_right=a.x+7
-	local a_bottom=a.y+7
+	local a_right=a.x+a.colw-1
+	local a_bottom=a.y+a.colh-1
 
 	local b_left=b.x
 	local b_top=b.y
-	local b_right=b.x+7
-	local b_bottom=b.y+7
+	local b_right=b.x+b.colw-1
+	local b_bottom=b.y+b.colh-1
 
 	if a_top >b_bottom then return false end
 	if b_top >a_bottom then return false end

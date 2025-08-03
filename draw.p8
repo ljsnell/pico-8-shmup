@@ -175,3 +175,18 @@ function draw_win()
 	print("a winner is u!", 30, 40, 12)
 	print("press any key to continue", 30, 80, blink())
 end
+
+function make_spr()
+	local myspr={}
+	myspr.x=0
+	myspr.y=0
+	myspr.flash=0
+	myspr.aniframe=1
+	myspr.spr=0
+	myspr.sprw=1
+	myspr.sprh=1
+	myspr.colw=8
+	myspr.colh=8
+
+	return myspr
+end

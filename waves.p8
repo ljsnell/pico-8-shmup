@@ -3,13 +3,9 @@ version 42
 __lua__
 function spawnen(entype)
 
-	local myen={}
+	local myen=make_spr()
 	myen.x=rnd(120)
 	myen.y=-8
-	myen.flash=0
-	myen.aniframe=1
-	myen.sprh=1
-	myen.sprw=1
 
 	if entype==nil or entype==1 then
 		-- green alien
@@ -33,6 +29,8 @@ function spawnen(entype)
 		myen.ani={208,210}
 		myen.sprh=2
 		myen.sprw=2
+		myen.colh=16
+		myen.colw=16
 	end
 
 	add(enemies,myen)

@@ -112,12 +112,10 @@ function update_game()
 	--fire bullet
 	if btn(5) then
 		if bultimer<=0 then
-			local newbul={}
+			local newbul=make_spr()
 			newbul.x=ship.x
 			newbul.y=ship.y-3
 			newbul.spr=bulspr
-			newbul.sprw=1
-			newbul.sprh=1
 			add(buls,newbul)		
 			sfx(0)
 			bultimer=6
