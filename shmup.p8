@@ -23,6 +23,8 @@ end
 -- spawn multiple enemies (try 5 or 10 over time)
 -- Different types of enemies
 function start_game()
+	-- enemies
+	enemies={}
 	wave=0
 	t=0
 	mode="splash"	

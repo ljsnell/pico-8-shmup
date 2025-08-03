@@ -143,7 +143,6 @@ function update_game()
 
 		if myen.y>128 then			
 			del(enemies,myen)
-			spawnen()
 		end
 	end
 
@@ -163,10 +162,6 @@ function update_game()
 					del(enemies, myen)
 					sfx(2)
 					score+=100
-
-					if #enemies==0 then
-						nextwave()
-					end
 				end
 			end
 		end
@@ -211,5 +206,10 @@ function update_game()
 	
 	if ship.y<0 then
 		ship.y=0
+	end
+
+	-- check if wave is over
+	if #enemies==0 and mode=="game" then
+		nextwave()
 	end
 end
