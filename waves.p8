@@ -9,7 +9,7 @@ function spawnen(entype,enx,eny)
 	if entype==nil or entype==1 then
 		-- green alien
 		myen.spr=20
-		myen.hp=5
+		myen.hp=3
 		myen.ani={20,21,22,23}
 	elseif entype==2 then
 		-- red flame
@@ -37,13 +37,22 @@ end
 
 --waves and enemies
 function spawnwave()
-	placens()
-	-- spawnen(wave)
+	if wave==1 then
+		placens({1,1,2,2,3,3,2,2,1,1})
+	elseif wave==2 then
+
+	elseif wave==3 then
+		-- spawnen(wave)
+	elseif wave==4 then
+	
+	end
 end
 
-function placens()
-	for x=1,10 do
-		spawnen(wave,x*12-6,8)
+function placens(lvl)
+	for y=1,4 do
+		for x=1,10 do
+			spawnen(lvl[x],x*12-6,4+y*12)
+		end
 	end
 end
 
