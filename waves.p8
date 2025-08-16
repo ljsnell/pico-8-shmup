@@ -42,7 +42,7 @@ function spawnwave()
 			{1,1,2,2,3,3,2,2,1,1},
 			{1,1,2,2,1,1,2,2,1,1},
 			{3,1,2,2,1,1,2,2,1,3},
-			{2,2,2,2,2,2,2,2,2,2}
+			{2,2,2,2,2,2,2,2,0,2}
 		})
 	elseif wave==2 then
 
@@ -57,7 +57,9 @@ function placens(lvl)
 	for y=1,4 do
 		local myline=lvl[y]
 		for x=1,10 do
-			spawnen(myline[x],x*12-6,4+y*12)
+			if myline[x]!=0 then
+				spawnen(myline[x],x*12-6,4+y*12)
+			end
 		end
 	end
 end
