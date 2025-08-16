@@ -38,7 +38,12 @@ end
 --waves and enemies
 function spawnwave()
 	if wave==1 then
-		placens({1,1,2,2,3,3,2,2,1,1})
+		placens({
+			{1,1,2,2,3,3,2,2,1,1},
+			{1,1,2,2,1,1,2,2,1,1},
+			{3,1,2,2,1,1,2,2,1,3},
+			{2,2,2,2,2,2,2,2,2,2}
+		})
 	elseif wave==2 then
 
 	elseif wave==3 then
@@ -50,8 +55,9 @@ end
 
 function placens(lvl)
 	for y=1,4 do
+		local myline=lvl[y]
 		for x=1,10 do
-			spawnen(lvl[x],x*12-6,4+y*12)
+			spawnen(myline[x],x*12-6,4+y*12)
 		end
 	end
 end
