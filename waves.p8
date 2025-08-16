@@ -1,12 +1,11 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-function spawnen(entype)
+function spawnen(entype,enx,eny)
 
 	local myen=make_spr()
-	myen.x=rnd(120)
-	myen.y=-8
-
+	myen.x=enx
+	myen.y=eny
 	if entype==nil or entype==1 then
 		-- green alien
 		myen.spr=20
@@ -32,13 +31,20 @@ function spawnen(entype)
 		myen.colh=16
 		myen.colw=16
 	end
-
+	
 	add(enemies,myen)
 end
 
 --waves and enemies
 function spawnwave()
-	spawnen(wave)
+	placens()
+	-- spawnen(wave)
+end
+
+function placens()
+	for x=1,10 do
+		spawnen(wave,x*12-6,8)
+	end
 end
 
 function nextwave()

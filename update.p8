@@ -140,7 +140,7 @@ function update_game()
 	
 	--moving enemies
 	for myen in all(enemies) do
-		myen.y+=1
+		-- myen.y+=1
 		myen.aniframe+=0.4
 		if flr(myen.aniframe)>#myen.ani then
 			myen.aniframe=1
