@@ -5,7 +5,13 @@ function spawnen(entype,enx,eny)
 
 	local myen=make_spr()
 	myen.x=enx
-	myen.y=eny
+	myen.y=eny-66
+
+	myen.posx=enx
+	myen.posy=eny
+	
+	myen.mission="flyin"
+
 	if entype==nil or entype==1 then
 		-- green alien
 		myen.spr=20

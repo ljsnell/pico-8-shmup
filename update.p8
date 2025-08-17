@@ -140,7 +140,7 @@ function update_game()
 	
 	--moving enemies
 	for myen in all(enemies) do
-		-- myen.y+=1
+		doenemy(myen)
 		myen.aniframe+=0.4
 		if flr(myen.aniframe)>#myen.ani then
 			myen.aniframe=1
@@ -219,4 +219,21 @@ function update_game()
 	if #enemies==0 and mode=="game" then
 		nextwave()
 	end
+end
+
+--behavior
+function doenemy(myen)
+ if myen.mission=="flyin" then
+  --flying in
+  myen.y+=1
+  if myen.y>=myen.posy then
+   myen.mission="protec"
+  end
+  
+ elseif myen.mission=="protec" then
+  -- staying put
+ elseif myen.mission=="attac" then  
+  -- attac 
+ end
+  
 end
