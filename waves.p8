@@ -4,7 +4,7 @@ __lua__
 function spawnen(entype,enx,eny)
 
 	local myen=make_spr()
-	myen.x=enx
+	myen.x=enx*1.25-16
 	myen.y=eny-66
 
 	myen.posx=enx
