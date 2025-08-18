@@ -223,6 +223,11 @@ end
 
 --behavior
 function doenemy(myen)
+ if myen.wait>0 then
+	myen.wait-=1
+	return
+ end
+
  if myen.mission=="flyin" then
   --flying in
   myen.y+=1
