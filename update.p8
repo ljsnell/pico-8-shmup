@@ -229,11 +229,11 @@ function doenemy(myen)
 	end
 
 	if myen.mission=="flyin" then
-	--flying in
- 	--basic easing function
-	--x+=(targetx-x)/n
-	 --myen.y+=1
-		myen.y+=(myen.posy-myen.y)/8
+		--flying in
+ 		--basic easing function
+		--x+=(targetx-x)/n
+	 	--myen.y+=1
+		myen.y+=(myen.posy-myen.y)/7
 
 	if myen.y>=myen.posy then
 		myen.mission="protec"
