@@ -1,7 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
-function spawnen(entype,enx,eny)
+function spawnen(entype,enx,eny,enwait)
 
 	local myen=make_spr()
 	myen.x=enx*1.25-16
@@ -9,7 +9,8 @@ function spawnen(entype,enx,eny)
 
 	myen.posx=enx
 	myen.posy=eny
-	
+
+	myen.wait=enwait
 	myen.mission="flyin"
 
 	if entype==nil or entype==1 then
@@ -79,7 +80,7 @@ function placens(lvl)
 		local myline=lvl[y]
 		for x=1,10 do
 			if myline[x]!=0 then
-				spawnen(myline[x],x*12-6,4+y*12)
+				spawnen(myline[x],x*12-6,4+y*12,x*2)
 			end
 		end
 	end

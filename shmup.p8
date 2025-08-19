@@ -32,8 +32,8 @@ function start_game()
 	
 	--ship vars
 	ship=make_spr()
-	ship.x=40
-	ship.y=40
+	ship.x=80
+	ship.y=80
 	ship.spr=17
 	
 	--bullet vars

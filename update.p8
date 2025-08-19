@@ -193,6 +193,8 @@ function update_game()
 		lockout=t+30
 	end
 
+	--picking
+	picking()
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
@@ -223,17 +225,42 @@ end
 
 --behavior
 function doenemy(myen)
- if myen.mission=="flyin" then
-  --flying in
-  myen.y+=1
-  if myen.y>=myen.posy then
-   myen.mission="protec"
-  end
+	if myen.wait>0 then
+		myen.wait-=1
+	return
+	end
+
+	if myen.mission=="flyin" then
+		--flying in
+ 		--basic easing function
+		--x+=(targetx-x)/n
+	 	--myen.y+=1
+		myen.x+=(myen.posx-myen.x)/7
+		myen.y+=(myen.posy-myen.y)/7
+
+	if abs(myen.y-myen.posy)<1 then
+		myen.y=myen.posy
+		myen.mission="protec"
+	end
   
- elseif myen.mission=="protec" then
-  -- staying put
- elseif myen.mission=="attac" then  
-  -- attac 
- end
-  
+	elseif myen.mission=="protec" then
+ 	-- staying put
+	-- myen.y+=10
+ 	elseif myen.mission=="attac" then  
+  	-- attac
+		myen.y+=1
+ 	end
+end
+
+function picking()
+	if mode!="game" then
+		return
+	end
+
+	if t%30==0 then
+		local myen=rnd(enemies)
+		if myen.mission=="protec" then
+			myen.mission="attac"
+		end
+	end
 end
