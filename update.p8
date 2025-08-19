@@ -257,8 +257,10 @@ function picking()
 		return
 	end
 
-	local myen=rnd(enemies)
-	if myen.mission=="protec" then
-		myen.mission="attac"
+	if t%30==0 then
+		local myen=rnd(enemies)
+		if myen.mission=="protec" then
+			myen.mission="attac"
+		end
 	end
 end
