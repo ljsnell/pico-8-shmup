@@ -223,22 +223,25 @@ end
 
 --behavior
 function doenemy(myen)
- if myen.wait>0 then
-	myen.wait-=1
+	if myen.wait>0 then
+		myen.wait-=1
 	return
- end
+	end
 
- if myen.mission=="flyin" then
-  --flying in
-  myen.y+=1
-  if myen.y>=myen.posy then
-   myen.mission="protec"
-  end
+	if myen.mission=="flyin" then
+	--flying in
+ 	--basic easing function
+	--x+=(targetx-x)/n
+	 --myen.y+=1
+		myen.y+=(myen.posy-myen.y)/8
+
+	if myen.y>=myen.posy then
+		myen.mission="protec"
+	end
   
- elseif myen.mission=="protec" then
-  -- staying put
- elseif myen.mission=="attac" then  
-  -- attac 
- end
-  
+	elseif myen.mission=="protec" then
+ 	-- staying put
+ 	elseif myen.mission=="attac" then  
+  	-- attac 
+ 	end
 end
