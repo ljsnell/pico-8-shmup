@@ -193,6 +193,8 @@ function update_game()
 		lockout=t+30
 	end
 
+	--picking
+	picking()
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
@@ -245,6 +247,18 @@ function doenemy(myen)
  	-- staying put
 	-- myen.y+=10
  	elseif myen.mission=="attac" then  
-  	-- attac 
+  	-- attac
+		myen.y+=1
  	end
+end
+
+function picking()
+	if mode!="game" then
+		return
+	end
+
+	local myen=rnd(enemies)
+	if myen.mission=="protec" then
+		myen.mission="attac"
+	end
 end
