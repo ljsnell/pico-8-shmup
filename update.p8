@@ -233,14 +233,17 @@ function doenemy(myen)
  		--basic easing function
 		--x+=(targetx-x)/n
 	 	--myen.y+=1
+		myen.x+=(myen.posx-myen.x)/7
 		myen.y+=(myen.posy-myen.y)/7
 
-	if myen.y>=myen.posy then
+	if abs(myen.y-myen.posy)<1 then
+		myen.y=myen.posy
 		myen.mission="protec"
 	end
   
 	elseif myen.mission=="protec" then
  	-- staying put
+	-- myen.y+=10
  	elseif myen.mission=="attac" then  
   	-- attac 
  	end
