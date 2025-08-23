@@ -49,7 +49,9 @@ function start_game()
 	lives=4
 	invul=0
 	bombs=2
-	
+
+	attacfreq=60
+
 	--star mapping
 	stars={}
 	

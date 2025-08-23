@@ -248,6 +248,25 @@ function doenemy(myen)
 	-- myen.y+=10
  	elseif myen.mission=="attac" then  
   	-- attac
+		if myen.type==1 then
+			myen.sy=1.7
+			myen.sx=sin(t/45)
+			if myen.x<32 then
+				myen.sx+=1-(myen.x/32)
+			end
+			
+			if myen.x>88 then
+				myen.sx-=1-(myen.x/88)/32
+			end
+
+			move(myen)
+		elseif myen.type==2 then
+
+		elseif myen.type==3 then
+
+		elseif myen.type==4 then
+
+		end
 		myen.y+=1
  	end
 end
@@ -258,9 +277,20 @@ function picking()
 	end
 
 	if t%30==0 then
-		local myen=rnd(enemies)
+		local maxnum=min(10,#enemies)
+
+		local myindex=flr(rnd(maxnum))
+
+		myindex=#enemies-myindex
+
+		local myen=enemies[myindex]
 		if myen.mission=="protec" then
 			myen.mission="attac"
 		end
 	end
+end
+
+function move(obj)
+	obj.x+=obj.sx
+	obj.y+=obj.sy
 end

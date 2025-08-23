@@ -10,6 +10,8 @@ function spawnen(entype,enx,eny,enwait)
 	myen.posx=enx
 	myen.posy=eny
 
+	myen.type=entype
+
 	myen.wait=enwait
 	myen.mission="flyin"
 
@@ -44,7 +46,11 @@ end
 
 --waves and enemies
 function spawnwave()
+
+	attacfreq=60
+
 	if wave==1 then
+		attacfreq=60
 		placens({
 			{1,1,1,1,1,1,1,1,1,0},
 			{1,1,1,1,1,1,1,1,1,0},
@@ -52,6 +58,7 @@ function spawnwave()
 			{1,1,1,1,1,1,1,1,1,0}
 		})
 	elseif wave==2 then
+		attacfreq=60
 		placens({
 			{1,1,2,2,3,3,2,2,1,1},
 			{1,1,2,2,1,1,2,2,1,1},
@@ -59,6 +66,7 @@ function spawnwave()
 			{2,2,2,2,2,2,2,2,0,2}
 		})
 	elseif wave==3 then
+		attacfreq=45
 		placens({
 			{1,1,2,2,3,3,2,2,1,1},
 			{1,1,2,2,1,1,2,2,1,1},
@@ -66,6 +74,7 @@ function spawnwave()
 			{2,2,2,2,2,2,2,2,0,2}
 		})	-- spawnen(wave)
 	elseif wave==4 then
+		attacfreq=35
 		placens({
 			{0,0,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,4,0,0,0,0},

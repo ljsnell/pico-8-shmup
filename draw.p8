@@ -181,6 +181,8 @@ function make_spr()
 	local myspr={}
 	myspr.x=0
 	myspr.y=0
+	myspr.sx=0
+	myspr.sy=0
 	myspr.flash=0
 	myspr.aniframe=1
 	myspr.spr=0
