@@ -258,17 +258,23 @@ function doenemy(myen)
 			if myen.x>88 then
 				myen.sx-=1-(myen.x/88)/32
 			end
-
-			move(myen)
 		elseif myen.type==2 then
-
+			myen.sy=2.5
+			myen.sx=sin(t/20)
+			if myen.x<32 then
+				myen.sx+=1-(myen.x/32)
+			end
+			
+			if myen.x>88 then
+				myen.sx-=1-(myen.x/88)/32
+			end
 		elseif myen.type==3 then
 
 		elseif myen.type==4 then
 
 		end
-		myen.y+=1
- 	end
+		move(myen)
+	end
 end
 
 function picking()
