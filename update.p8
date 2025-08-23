@@ -269,7 +269,18 @@ function doenemy(myen)
 				myen.sx-=1-(myen.x/88)/32
 			end
 		elseif myen.type==3 then
-
+			if myen.sx==0 then
+				-- flying down
+				myen.sy=2
+				if ship.y<=myen.y then
+					myen.sy=0
+					if ship.x<myen.x then
+						myen.sx=-2
+					else
+						myen.sx=2
+					end
+				end
+			end
 		elseif myen.type==4 then
 
 		end

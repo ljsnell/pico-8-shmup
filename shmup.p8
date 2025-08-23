@@ -26,7 +26,7 @@ end
 function start_game()
 	-- enemies
 	enemies={}
-	wave=1
+	wave=2
 	t=0
 	mode="splash"	
 	
