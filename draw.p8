@@ -184,6 +184,7 @@ function make_spr()
 	myspr.sx=0
 	myspr.sy=0
 	myspr.flash=0
+	myspr.shake=0
 	myspr.aniframe=1
 	myspr.spr=0
 	myspr.sprw=1

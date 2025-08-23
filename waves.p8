@@ -15,6 +15,8 @@ function spawnen(entype,enx,eny,enwait)
 	myen.wait=enwait
 	myen.mission="flyin"
 
+	myen.anispd=0.4
+
 	if entype==nil or entype==1 then
 		-- green alien
 		myen.spr=20

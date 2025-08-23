@@ -141,7 +141,7 @@ function update_game()
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
-		myen.aniframe+=0.4
+		myen.aniframe+=myen.anispd
 		if flr(myen.aniframe)>#myen.ani then
 			myen.aniframe=1
 		end
@@ -307,6 +307,9 @@ function picking()
 		local myen=enemies[myindex]
 		if myen.mission=="protec" then
 			myen.mission="attac"
+			myen.anispd*=3
+			myen.wait=60
+			myen.shake=60
 		end
 	end
 end
