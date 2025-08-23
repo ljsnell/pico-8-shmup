@@ -146,9 +146,10 @@ function update_game()
 			myen.aniframe=1
 		end
 		myen.spr=myen.ani[flr(myen.aniframe)]
-
-		if myen.y>128 then			
-			del(enemies,myen)
+		if myen.mission!="flyin" then
+			if myen.y>128 or myen.x<-8 or myen.x>128 then			
+				del(enemies,myen)
+			end
 		end
 	end
 
@@ -282,7 +283,10 @@ function doenemy(myen)
 				end
 			end
 		elseif myen.type==4 then
-
+			myen.sy=0.35
+			if myen.y>110 then
+				myen.sy=1
+			end
 		end
 		move(myen)
 	end
