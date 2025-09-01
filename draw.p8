@@ -88,6 +88,11 @@ function draw_game()
 			end
 		end
 	end
+
+	for myebul in all(ebuls) do
+		drawspr(myebul)
+	end
+
 	--ui
 	print("score: "..score, 30,1,12)
 	-- lives

@@ -59,6 +59,15 @@ function spawnwave()
 			{1,1,1,1,1,1,1,1,1,0},
 			{1,1,1,1,1,1,1,1,1,0}
 		})
+
+		local myebul=make_spr()
+		myebul.spr=33
+		myebul.x=64
+		myebul.y=74
+		myebul.ani={32,33,34,33}
+		myebul.anispd=0.4
+		add(ebuls,myebul)
+
 	elseif wave==2 then
 		attacfreq=60
 		placens({

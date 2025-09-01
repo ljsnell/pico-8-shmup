@@ -141,11 +141,9 @@ function update_game()
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
-		myen.aniframe+=myen.anispd
-		if flr(myen.aniframe)>#myen.ani then
-			myen.aniframe=1
-		end
-		myen.spr=myen.ani[flr(myen.aniframe)]
+		-- enemy animation
+		animate(myen)
+		-- enemy leaving screen	
 		if myen.mission!="flyin" then
 			if myen.y>128 or myen.x<-8 or myen.x>128 then			
 				del(enemies,myen)
@@ -165,10 +163,7 @@ function update_game()
 				myen.flash=5
 
 				if myen.hp<=0 then
-					explode(myen.x+4,myen.y+4)
-					del(enemies, myen)
-					sfx(2)
-					score+=100
+					killen(myen)
 				end
 			end
 		end
@@ -195,7 +190,7 @@ function update_game()
 	end
 
 	--picking
-	picking()
+	picktimer()
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
@@ -292,29 +287,57 @@ function doenemy(myen)
 	end
 end
 
-function picking()
+function picktimer()
 	if mode!="game" then
 		return
 	end
 
-	if t%30==0 then
-		local maxnum=min(10,#enemies)
-
-		local myindex=flr(rnd(maxnum))
-
-		myindex=#enemies-myindex
-
-		local myen=enemies[myindex]
-		if myen.mission=="protec" then
-			myen.mission="attac"
-			myen.anispd*=3
-			myen.wait=60
-			myen.shake=60
-		end
+	if t%attacfreq==0 then
+		pickattac()
 	end
+end
+
+function pickattac()
+	local maxnum=min(10,#enemies)
+
+	local myindex=flr(rnd(maxnum))
+
+	myindex=#enemies-myindex
+
+	local myen=enemies[myindex]
+
+	if myen==nil then return end
+
+	if myen.mission=="protec" then
+		myen.mission="attac"
+		myen.anispd*=3
+		myen.wait=60
+		myen.shake=60
+	end	
 end
 
 function move(obj)
 	obj.x+=obj.sx
 	obj.y+=obj.sy
+end
+
+function killen(myen)
+	explode(myen.x+4,myen.y+4)
+	del(enemies, myen)
+	sfx(2)
+	score+=100
+
+	if myen.mission=="attac" then
+		if rnd()<0.5 then
+			pickattac()
+		end
+	end
+end
+
+function animate(myen)
+	myen.aniframe+=myen.anispd
+	if flr(myen.aniframe)>#myen.ani then
+		myen.aniframe=1
+	end
+	myen.spr=myen.ani[flr(myen.aniframe)]
 end
