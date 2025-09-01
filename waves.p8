@@ -66,6 +66,7 @@ function spawnwave()
 		myebul.y=74
 		myebul.ani={32,33,34,33}
 		myebul.anispd=0.4
+		myebul.sy=1
 		add(ebuls,myebul)
 
 	elseif wave==2 then

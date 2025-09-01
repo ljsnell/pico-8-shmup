@@ -137,7 +137,16 @@ function update_game()
 			del(buls,mybul)
 		end
 	end
-	
+
+	-- moving the ebuls
+	for myebul in all(ebuls) do
+		move(myebul)
+		animate(myebul)
+		if myebul.y>128 or myebul.x<-8 or myebul.x>128 then
+			del(ebuls,myebul)
+		end
+	end
+
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
