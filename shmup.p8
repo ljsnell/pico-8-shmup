@@ -109,7 +109,10 @@ function drawspr(myspr)
 
 	if myspr.shake>0 then
 		myspr.shake-=1
-		sprx+=sin(t/4)
+		if t%4<2 then
+			sprx+=1
+		end
+		sprx+=abs(sin(t/2.5)*1.5)
 	end
 	spr(myspr.spr,sprx,spry,myspr.sprw,myspr.sprh)
 end
