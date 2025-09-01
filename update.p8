@@ -141,14 +141,15 @@ function update_game()
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
-		myen.aniframe+=0.4
+		myen.aniframe+=myen.anispd
 		if flr(myen.aniframe)>#myen.ani then
 			myen.aniframe=1
 		end
 		myen.spr=myen.ani[flr(myen.aniframe)]
-
-		if myen.y>128 then			
-			del(enemies,myen)
+		if myen.mission!="flyin" then
+			if myen.y>128 or myen.x<-8 or myen.x>128 then			
+				del(enemies,myen)
+			end
 		end
 	end
 
@@ -248,8 +249,47 @@ function doenemy(myen)
 	-- myen.y+=10
  	elseif myen.mission=="attac" then  
   	-- attac
-		myen.y+=1
- 	end
+		if myen.type==1 then
+			myen.sy=1.7
+			myen.sx=sin(t/45)
+			if myen.x<32 then
+				myen.sx+=1-(myen.x/32)
+			end
+			
+			if myen.x>88 then
+				myen.sx-=1-(myen.x/88)/32
+			end
+		elseif myen.type==2 then
+			myen.sy=2.5
+			myen.sx=sin(t/20)
+			if myen.x<32 then
+				myen.sx+=1-(myen.x/32)
+			end
+			
+			if myen.x>88 then
+				myen.sx-=1-(myen.x/88)/32
+			end
+		elseif myen.type==3 then
+			if myen.sx==0 then
+				-- flying down
+				myen.sy=2
+				if ship.y<=myen.y then
+					myen.sy=0
+					if ship.x<myen.x then
+						myen.sx=-2
+					else
+						myen.sx=2
+					end
+				end
+			end
+		elseif myen.type==4 then
+			myen.sy=0.35
+			if myen.y>110 then
+				myen.sy=1
+			end
+		end
+		move(myen)
+	end
 end
 
 function picking()
@@ -258,9 +298,23 @@ function picking()
 	end
 
 	if t%30==0 then
-		local myen=rnd(enemies)
+		local maxnum=min(10,#enemies)
+
+		local myindex=flr(rnd(maxnum))
+
+		myindex=#enemies-myindex
+
+		local myen=enemies[myindex]
 		if myen.mission=="protec" then
 			myen.mission="attac"
+			myen.anispd*=3
+			myen.wait=60
+			myen.shake=60
 		end
 	end
+end
+
+function move(obj)
+	obj.x+=obj.sx
+	obj.y+=obj.sy
 end

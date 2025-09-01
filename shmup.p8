@@ -49,7 +49,9 @@ function start_game()
 	lives=4
 	invul=0
 	bombs=2
-	
+
+	attacfreq=60
+
 	--star mapping
 	stars={}
 	
@@ -102,7 +104,14 @@ function blink()
 end
 
 function drawspr(myspr)
-	spr(myspr.spr,myspr.x,myspr.y,myspr.sprw,myspr.sprh)
+	local sprx=myspr.x
+	local spry=myspr.y
+
+	if myspr.shake>0 then
+		myspr.shake-=1
+		sprx+=sin(t/4)
+	end
+	spr(myspr.spr,sprx,spry,myspr.sprw,myspr.sprh)
 end
 
 function col(a,b)
