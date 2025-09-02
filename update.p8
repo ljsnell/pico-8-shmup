@@ -193,6 +193,20 @@ function update_game()
 	else
 		invul-=1
 	end
+
+	-- colission ship x ebuls
+	if invul<=0 then
+		for myebul in all(ebuls) do
+			if col(myebul,ship) then
+				explode(ship.x+4, ship.y+4, true)
+				lives-=1
+				sfx(1)
+				invul=45
+				-- del(enemies,myen)
+			end
+		end
+	end
+
 	-- check if died
 	if lives <=0 then
 		mode="over"
@@ -362,5 +376,8 @@ function fire(myen)
 	myebul.ani={32,33,34,33}
 	myebul.anispd=0.4
 	myebul.sy=1
+	myebul.colw=6
+	myebul.colh=6
+
 	add(ebuls,myebul)
 end
