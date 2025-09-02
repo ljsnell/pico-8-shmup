@@ -317,8 +317,9 @@ function picktimer()
 		return
 	end
 
-	if t%30==0 then
+	if t>nextfire then
 		pickfire()
+		nextfire=t+20+rnd(20)
 	end
 
 	if t%attacfreq==0 then

@@ -51,6 +51,7 @@ function start_game()
 	bombs=2
 
 	attacfreq=60
+	nextfire=0
 
 	--star mapping
 	stars={}
