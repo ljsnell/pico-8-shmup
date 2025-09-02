@@ -380,5 +380,6 @@ function fire(myen)
 	myebul.colh=6
 	myebul.bulmode=true
 
+	myen.flash=10
 	add(ebuls,myebul)
 end
