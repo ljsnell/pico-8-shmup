@@ -378,6 +378,7 @@ function fire(myen)
 	myebul.sy=1
 	myebul.colw=6
 	myebul.colh=6
+	myebul.bulmode=true
 
 	add(ebuls,myebul)
 end

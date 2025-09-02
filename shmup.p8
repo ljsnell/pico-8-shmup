@@ -116,6 +116,11 @@ function drawspr(myspr)
 		end
 		sprx+=abs(sin(t/2.5)*1.5)
 	end
+
+	if myspr.bulmode then
+		sprx-=2
+		spry-=2
+	end
 	spr(myspr.spr,sprx,spry,myspr.sprw,myspr.sprh)
 end
 
