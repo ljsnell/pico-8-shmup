@@ -317,6 +317,10 @@ function picktimer()
 		return
 	end
 
+	if t%30==0 then
+		pickfire()
+	end
+
 	if t%attacfreq==0 then
 		pickattac()
 	end
@@ -334,13 +338,31 @@ function pickattac()
 	if myen==nil then return end
 
 	if myen.mission=="protec" then
-		-- myen.mission="attac"
-		-- myen.anispd*=3
-		-- myen.wait=60
-		-- myen.shake=60
+		myen.mission="attac"
+		myen.anispd*=3
+		myen.wait=60
+		myen.shake=60
+	end	
+end
+
+
+function pickfire()
+	local maxnum=min(10,#enemies)
+
+	local myindex=flr(rnd(maxnum))
+
+	myindex=#enemies-myindex
+
+	local myen=enemies[myindex]
+
+	if myen==nil then return end
+
+	if myen.mission=="protec" then
 		fire(myen)
 	end	
 end
+
+
 
 function move(obj)
 	obj.x+=obj.sx
