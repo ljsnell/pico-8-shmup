@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+
 function _update()
 	blinkt+=1
 	t+=1
@@ -251,6 +252,7 @@ function doenemy(myen)
 	elseif myen.mission=="protec" then
  	-- staying put
 	-- myen.y+=10
+		-- fire(myen)
  	elseif myen.mission=="attac" then  
   	-- attac
 		if myen.type==1 then
@@ -318,10 +320,11 @@ function pickattac()
 	if myen==nil then return end
 
 	if myen.mission=="protec" then
-		myen.mission="attac"
-		myen.anispd*=3
-		myen.wait=60
-		myen.shake=60
+		-- myen.mission="attac"
+		-- myen.anispd*=3
+		-- myen.wait=60
+		-- myen.shake=60
+		fire(myen)
 	end	
 end
 
@@ -349,4 +352,15 @@ function animate(myen)
 		myen.aniframe=1
 	end
 	myen.spr=myen.ani[flr(myen.aniframe)]
+end
+
+function fire(myen)
+	local myebul=make_spr()
+	myebul.spr=32
+	myebul.x=myen.x
+	myebul.y=myen.y
+	myebul.ani={32,33,34,33}
+	myebul.anispd=0.4
+	myebul.sy=1
+	add(ebuls,myebul)
 end
