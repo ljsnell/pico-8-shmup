@@ -117,7 +117,9 @@ function update_game()
 			newbul.x=ship.x
 			newbul.y=ship.y-3
 			newbul.spr=bulspr
-			add(buls,newbul)		
+			newbul.colw=6
+			newbul.sy=-4
+			add(buls,newbul)@
 			sfx(0)
 			bultimer=6
 			muzzle=4
@@ -130,10 +132,8 @@ function update_game()
 	ship.y=ship.y+yspeed
 	
 	--move the bullets
-	for i=#buls,1,-1 do
-		local mybul=buls[i]
-		mybul.y=mybul.y-3
-
+	for mybul in all(buls) do
+		move(mybul)
 		if mybul.y<-8 then
 			del(buls,mybul)
 		end
