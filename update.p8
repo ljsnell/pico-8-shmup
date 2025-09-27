@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+
 function _update()
 	blinkt+=1
 	t+=1
@@ -116,7 +117,9 @@ function update_game()
 			newbul.x=ship.x
 			newbul.y=ship.y-3
 			newbul.spr=bulspr
-			add(buls,newbul)		
+			newbul.colw=6
+			newbul.sy=-4
+			add(buls,newbul)
 			sfx(0)
 			bultimer=6
 			muzzle=4
@@ -129,23 +132,28 @@ function update_game()
 	ship.y=ship.y+yspeed
 	
 	--move the bullets
-	for i=#buls,1,-1 do
-		local mybul=buls[i]
-		mybul.y=mybul.y-3
-
+	for mybul in all(buls) do
+		move(mybul)
 		if mybul.y<-8 then
 			del(buls,mybul)
 		end
 	end
-	
+
+	-- moving the ebuls
+	for myebul in all(ebuls) do
+		move(myebul)
+		animate(myebul)
+		if myebul.y>128 or myebul.x<-8 or myebul.x>128 then
+			del(ebuls,myebul)
+		end
+	end
+
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
-		myen.aniframe+=myen.anispd
-		if flr(myen.aniframe)>#myen.ani then
-			myen.aniframe=1
-		end
-		myen.spr=myen.ani[flr(myen.aniframe)]
+		-- enemy animation
+		animate(myen)
+		-- enemy leaving screen	
 		if myen.mission!="flyin" then
 			if myen.y>128 or myen.x<-8 or myen.x>128 then			
 				del(enemies,myen)
@@ -165,10 +173,7 @@ function update_game()
 				myen.flash=5
 
 				if myen.hp<=0 then
-					explode(myen.x+4,myen.y+4)
-					del(enemies, myen)
-					sfx(2)
-					score+=100
+					killen(myen)
 				end
 			end
 		end
@@ -188,6 +193,20 @@ function update_game()
 	else
 		invul-=1
 	end
+
+	-- colission ship x ebuls
+	if invul<=0 then
+		for myebul in all(ebuls) do
+			if col(myebul,ship) then
+				explode(ship.x+4, ship.y+4, true)
+				lives-=1
+				sfx(1)
+				invul=45
+				-- del(enemies,myen)
+			end
+		end
+	end
+
 	-- check if died
 	if lives <=0 then
 		mode="over"
@@ -195,7 +214,7 @@ function update_game()
 	end
 
 	--picking
-	picking()
+	picktimer()
 	-- Maybe spawn double enemies everytime an enemy gets killed?
 
 	if muzzle>0 then
@@ -247,6 +266,7 @@ function doenemy(myen)
 	elseif myen.mission=="protec" then
  	-- staying put
 	-- myen.y+=10
+		-- fire(myen)
  	elseif myen.mission=="attac" then  
   	-- attac
 		if myen.type==1 then
@@ -292,29 +312,97 @@ function doenemy(myen)
 	end
 end
 
-function picking()
+function picktimer()
 	if mode!="game" then
 		return
 	end
 
-	if t%30==0 then
-		local maxnum=min(10,#enemies)
+	if t>nextfire then
+		pickfire()
+		nextfire=t+20+rnd(20)
+	end
 
-		local myindex=flr(rnd(maxnum))
-
-		myindex=#enemies-myindex
-
-		local myen=enemies[myindex]
-		if myen.mission=="protec" then
-			myen.mission="attac"
-			myen.anispd*=3
-			myen.wait=60
-			myen.shake=60
-		end
+	if t%attacfreq==0 then
+		pickattac()
 	end
 end
+
+function pickattac()
+	local maxnum=min(10,#enemies)
+
+	local myindex=flr(rnd(maxnum))
+
+	myindex=#enemies-myindex
+
+	local myen=enemies[myindex]
+
+	if myen==nil then return end
+
+	if myen.mission=="protec" then
+		myen.mission="attac"
+		myen.anispd*=3
+		myen.wait=60
+		myen.shake=60
+	end	
+end
+
+
+function pickfire()
+	local maxnum=min(10,#enemies)
+
+	local myindex=flr(rnd(maxnum))
+
+	myindex=#enemies-myindex
+
+	local myen=enemies[myindex]
+
+	if myen==nil then return end
+
+	if myen.mission=="protec" then
+		fire(myen)
+	end	
+end
+
+
 
 function move(obj)
 	obj.x+=obj.sx
 	obj.y+=obj.sy
+end
+
+function killen(myen)
+	explode(myen.x+4,myen.y+4)
+	del(enemies, myen)
+	sfx(2)
+	score+=100
+
+	if myen.mission=="attac" then
+		if rnd()<0.5 then
+			pickattac()
+		end
+	end
+end
+
+function animate(myen)
+	myen.aniframe+=myen.anispd
+	if flr(myen.aniframe)>#myen.ani then
+		myen.aniframe=1
+	end
+	myen.spr=myen.ani[flr(myen.aniframe)]
+end
+
+function fire(myen)
+	local myebul=make_spr()
+	myebul.spr=32
+	myebul.x=myen.x
+	myebul.y=myen.y
+	myebul.ani={32,33,34,33}
+	myebul.anispd=0.4
+	myebul.sy=1
+	myebul.colw=6
+	myebul.colh=6
+	myebul.bulmode=true
+
+	myen.flash=10
+	add(ebuls,myebul)
 end
