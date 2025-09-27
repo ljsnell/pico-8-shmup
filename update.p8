@@ -306,6 +306,10 @@ function doenemy(myen)
 			myen.sy=0.35
 			if myen.y>110 then
 				myen.sy=1
+			else
+				if t%30==0 then
+					firespread(myen,8,2,rnd())
+				end
 			end
 		end
 		move(myen)
@@ -359,7 +363,8 @@ function pickfire()
 	if myen==nil then return end
 
 	if myen.mission=="protec" then
-		fire(myen)
+		fire(myen,0,2)
+		-- firespread(myen,8,2)
 	end	
 end
 
@@ -391,18 +396,37 @@ function animate(myen)
 	myen.spr=myen.ani[flr(myen.aniframe)]
 end
 
-function fire(myen)
+function fire(myen,ang,spd)
 	local myebul=make_spr()
 	myebul.spr=32
 	myebul.x=myen.x
 	myebul.y=myen.y
+
+	if myen.type==4 then
+		myebul.x=myen.x+7
+		myebul.y=myen.y+13
+	end
+
 	myebul.ani={32,33,34,33}
 	myebul.anispd=0.4
-	myebul.sy=1
+
+	myebul.sx=sin(ang)*spd
+	myebul.sy=cos(ang)*spd
+
 	myebul.colw=6
 	myebul.colh=6
 	myebul.bulmode=true
 
 	myen.flash=10
 	add(ebuls,myebul)
+end
+
+function firespread(myen,num,spd, base)
+	if base==nil then 
+		base=0
+	end
+	
+	for i=1,num do
+		fire(myen,1/num*i+base,spd)
+	end
 end
