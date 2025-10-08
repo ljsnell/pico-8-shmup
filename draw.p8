@@ -3,6 +3,8 @@ version 42
 __lua__
 
 function _draw()
+	doshake()
+
 	if mode=="game" then
 		draw_game()
 	elseif mode=="start" then
@@ -198,4 +200,16 @@ function make_spr()
 	myspr.colh=8
 
 	return myspr
+end
+
+function doshake()
+	local shakex=rnd(shake)
+	local shakey=rnd(shake)
+
+	camera(shakex, shakey)
+
+	shake-=1
+	if shake<1 then
+		shake=0
+	end
 end

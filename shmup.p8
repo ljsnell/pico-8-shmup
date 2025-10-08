@@ -18,6 +18,7 @@ function _init()
 	splashcnt=0
 	wavetime=70
 	lockout=0
+	shake=32
 end
 -- update to account for using the drawspr for the ship.
 -- using the improved loop
