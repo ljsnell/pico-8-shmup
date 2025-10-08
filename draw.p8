@@ -208,8 +208,12 @@ function doshake()
 
 	camera(shakex, shakey)
 
-	shake-=1
-	if shake<1 then
-		shake=0
+	if shake>10 then
+		shake*=0.9
+	else
+		shake-=1
+		if shake<1 then
+			shake=0
+		end
 	end
 end
