@@ -203,8 +203,8 @@ function make_spr()
 end
 
 function doshake()
-	local shakex=rnd(shake)
-	local shakey=rnd(shake)
+	local shakex=rnd(shake)-(shake/2)
+	local shakey=rnd(shake)-(shake/2)
 
 	camera(shakex, shakey)
 

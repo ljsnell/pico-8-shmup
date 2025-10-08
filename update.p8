@@ -187,6 +187,7 @@ function update_game()
 				lives-=1
 				sfx(1)
 				invul=45
+				shake=12
 				-- del(enemies,myen)
 			end
 		end
@@ -202,6 +203,7 @@ function update_game()
 				lives-=1
 				sfx(1)
 				invul=45
+				shake=12
 				-- del(enemies,myen)
 			end
 		end
