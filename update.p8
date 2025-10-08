@@ -187,6 +187,7 @@ function update_game()
 				lives-=1
 				sfx(1)
 				invul=45
+				shake=12
 				-- del(enemies,myen)
 			end
 		end
@@ -202,6 +203,7 @@ function update_game()
 				lives-=1
 				sfx(1)
 				invul=45
+				shake=12
 				-- del(enemies,myen)
 			end
 		end
@@ -307,7 +309,7 @@ function doenemy(myen)
 			if myen.y>110 then
 				myen.sy=1
 			else
-				if t%30==0 then
+				if t%25==0 then
 					firespread(myen,8,2,rnd())
 				end
 			end
@@ -363,8 +365,13 @@ function pickfire()
 	if myen==nil then return end
 
 	if myen.mission=="protec" then
-		fire(myen,0,2)
-		-- firespread(myen,8,2)
+		if myen.type==4 then
+			firespread(myen,8,1.3,rnd())
+		elseif myen.type==2 then
+			aimedfire(myen,2)
+		else
+			fire(myen,0,2)
+		end
 	end	
 end
 
@@ -419,6 +426,7 @@ function fire(myen,ang,spd)
 
 	myen.flash=10
 	add(ebuls,myebul)
+	return myebul
 end
 
 function firespread(myen,num,spd, base)
@@ -429,4 +437,12 @@ function firespread(myen,num,spd, base)
 	for i=1,num do
 		fire(myen,1/num*i+base,spd)
 	end
+end
+
+function aimedfire(myen,spd)
+	local myebul=fire(myen,0,spd)
+	local ang=atan2((ship.y+4)-myebul.y, ship.x-myebul.x)
+
+	myebul.sx=sin(ang)*spd
+	myebul.sy=cos(ang)*spd
 end
