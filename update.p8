@@ -424,6 +424,7 @@ function fire(myen,ang,spd)
 
 	myen.flash=10
 	add(ebuls,myebul)
+	return myebul
 end
 
 function firespread(myen,num,spd, base)
@@ -437,6 +438,9 @@ function firespread(myen,num,spd, base)
 end
 
 function aimedfire(myen,spd)
-	local ang=atan2(ship.y-myen.y,ship.x-myen.x)
-	fire(myen,ang,spd)
+	local myebul=fire(myen,0,spd)
+	local ang=atan2((ship.y+4)-myebul.y, ship.x-myebul.x)
+
+	myebul.sx=sin(ang)*spd
+	myebul.sy=cos(ang)*spd
 end
