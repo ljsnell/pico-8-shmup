@@ -395,6 +395,14 @@ function killen(myen)
 	end
 end
 
+function droppickup(pix,piy)
+	local mypick=make_spr()
+	mypick.x=pix
+	mypick.y=piy
+	mypick.sy=0.5
+	mypick.spr=014
+end
+
 function animate(myen)
 	myen.aniframe+=myen.anispd
 	if flr(myen.aniframe)>#myen.ani then
