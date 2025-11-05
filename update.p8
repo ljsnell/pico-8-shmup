@@ -148,6 +148,14 @@ function update_game()
 		end
 	end
 
+	-- moving the pickups
+	for mypick in all(pickups) do
+		move(pickups)
+		if mypick.y>128 or mypick.x<-8 or mypick.x>128 then
+			del(pickups,mypick)
+		end
+	end
+
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
@@ -208,7 +216,13 @@ function update_game()
 			end
 		end
 	end
-
+	-- collision pickup x ship
+	for mypick in all(pickups) do
+		if col(mypick,ship) then
+			del(pickups,mypick)
+			cher+=1
+		end
+	end
 	-- check if died
 	if lives <=0 then
 		mode="over"

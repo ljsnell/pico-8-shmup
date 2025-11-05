@@ -47,6 +47,7 @@ function start_game()
 	
 	--game state
 	score=0
+	cher=0
 	lives=4
 	invul=0
 	bombs=2

@@ -46,6 +46,11 @@ function draw_game()
 		end
 	end
 
+	-- drawing pickups
+	for mypick in all(pickups) do
+		drawspr(mypick)
+	end
+
 	-- drawing swaves
 	for mysw in all(shwaves) do
 		circ(mysw.x,mysw.y,mysw.r,mysw.col)
@@ -105,13 +110,15 @@ function draw_game()
 			spr(12,i*9-8,1)
 		end
 	end
-
+	-- cherries
+	spr(14,108,1)
+	print(cher, 118,1,14)
 	-- bombs
 	for i=1,3 do
 		if bombs>=i then
-			spr(27,100+i*9-8,1)
+			spr(27,100+i*9-38,1)
 		else
-			spr(28,100+i*9-8,1)
+			spr(28,100+i*9-38,1)
 		end
 	end
 	
