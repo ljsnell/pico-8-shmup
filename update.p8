@@ -221,6 +221,7 @@ function update_game()
 		if col(mypick,ship) then
 			del(pickups,mypick)
 			cher+=1
+			smol_shwave(mypick.x+4, mypick.y+4, 14)
 		end
 	end
 	-- check if died

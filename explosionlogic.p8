@@ -37,6 +37,9 @@ function explode(expx,expy,isblue)
 end
 
 function smol_shwave(shx,shy)
+	if shcol==nil then
+		shcol=9
+	end
 	local mysw={}
 	mysw.x=shx
 	mysw.y=shy
