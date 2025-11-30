@@ -402,7 +402,10 @@ function killen(myen)
 	del(enemies, myen)
 	sfx(2)
 	score+=100
-	droppickup(myen.x, myen.y)
+	
+	if rnd()<0.15 then
+		droppickup(myen.x, myen.y)
+	end
 
 	if myen.mission=="attac" then
 		if rnd()<0.5 then
