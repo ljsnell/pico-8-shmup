@@ -150,7 +150,7 @@ function update_game()
 
 	-- moving the pickups
 	for mypick in all(pickups) do
-		move(pickups)
+		move(mypick)
 		if mypick.y>128 or mypick.x<-8 or mypick.x>128 then
 			del(pickups,mypick)
 		end
@@ -401,6 +401,7 @@ function killen(myen)
 	del(enemies, myen)
 	sfx(2)
 	score+=100
+	droppickup(myen.x, myen.y)
 
 	if myen.mission=="attac" then
 		if rnd()<0.5 then
@@ -415,6 +416,7 @@ function droppickup(pix,piy)
 	mypick.y=piy
 	mypick.sy=0.5
 	mypick.spr=014
+	add(pickups, mypick)
 end
 
 function animate(myen)
