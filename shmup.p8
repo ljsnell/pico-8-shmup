@@ -111,6 +111,16 @@ function blink()
 	return banim[blinkt]
 end
 
+function drwoutline(myspr)
+	local sprx=myspr.x
+	local spry=myspr.y
+
+	spr(myspr.spr,sprx+1,spry,myspr.sprw,myspr.sprh)
+	spr(myspr.spr,sprx-1,spry,myspr.sprw,myspr.sprh)
+	spr(myspr.spr,sprx,spry+1,myspr.sprw,myspr.sprh)
+	spr(myspr.spr,sprx,spry-1,myspr.sprw,myspr.sprh)
+end
+
 function drawspr(myspr)
 	local sprx=myspr.x
 	local spry=myspr.y

@@ -48,6 +48,18 @@ function draw_game()
 
 	-- drawing pickups
 	for mypick in all(pickups) do
+		local mycol=7
+
+		if t%4<2 then
+			mycol=14
+		end
+
+		for i=1,15 do
+			pal(i,mycol)
+		end
+
+		drwoutline(mypick)
+		pal()
 		drawspr(mypick)
 	end
 
