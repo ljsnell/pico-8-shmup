@@ -148,6 +148,14 @@ function update_game()
 		end
 	end
 
+	-- moving the pickups
+	for mypick in all(pickups) do
+		move(mypick)
+		if mypick.y>128 or mypick.x<-8 or mypick.x>128 then
+			del(pickups,mypick)
+		end
+	end
+
 	--moving enemies
 	for myen in all(enemies) do
 		doenemy(myen)
@@ -208,7 +216,14 @@ function update_game()
 			end
 		end
 	end
-
+	-- collision pickup x ship
+	for mypick in all(pickups) do
+		if col(mypick,ship) then
+			del(pickups,mypick)
+			cher+=1
+			smol_shwave(mypick.x+4, mypick.y+4, 14)
+		end
+	end
 	-- check if died
 	if lives <=0 then
 		mode="over"
@@ -387,12 +402,25 @@ function killen(myen)
 	del(enemies, myen)
 	sfx(2)
 	score+=100
+	
+	if rnd()<0.15 then
+		droppickup(myen.x, myen.y)
+	end
 
 	if myen.mission=="attac" then
 		if rnd()<0.5 then
 			pickattac()
 		end
 	end
+end
+
+function droppickup(pix,piy)
+	local mypick=make_spr()
+	mypick.x=pix
+	mypick.y=piy
+	mypick.sy=0.5
+	mypick.spr=014
+	add(pickups, mypick)
 end
 
 function animate(myen)
