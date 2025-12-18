@@ -78,7 +78,7 @@ function start_game()
 	
 	-- pickups
 	pickups={}
-
+	floats={}
 	nextwave()
 end
 

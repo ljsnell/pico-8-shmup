@@ -220,8 +220,7 @@ function update_game()
 	for mypick in all(pickups) do
 		if col(mypick,ship) then
 			del(pickups,mypick)
-			cher+=1
-			smol_shwave(mypick.x+4, mypick.y+4, 14)
+			plogic(mypick)
 		end
 	end
 	-- check if died
@@ -423,6 +422,24 @@ function droppickup(pix,piy)
 	mypick.sy=0.75
 	mypick.spr=014
 	add(pickups, mypick)
+end
+
+function plogic(mypick)
+	cher+=1
+	smol_shwave(mypick.x+4, mypick.y+4, 14)
+	if cher>=10 then
+		-- get life
+		if lives<4 then
+			lives+=1
+			cher=0
+			popfloat("1up!", mypick.x+4, mypick.y+4)
+		else
+			score+=10
+			cher=0
+		end
+	else
+		--sfx
+	end
 end
 
 function animate(myen)

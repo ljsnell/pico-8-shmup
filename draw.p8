@@ -111,6 +111,15 @@ function draw_game()
 	for myebul in all(ebuls) do
 		drawspr(myebul)
 	end
+    -- floats
+	for myfl in all(floats) do 
+		print(myfl.txt, myfl.x, myfl.y)
+		myfl.y-=0.5
+		myfl.age+=1
+		if myfl.age>60 then
+			del(floats,myfl)
+		end
+	end
 
 	--ui
 	print("score: "..score, 30,1,12)
@@ -235,4 +244,14 @@ function doshake()
 			shake=0
 		end
 	end
+end
+
+function popfloat(fltxt, flx,fly)
+	local float={}
+	fl.x=flx
+	fl.y=fly
+	fl.txt=fltxt
+	fl.age=0
+
+	add(floats,fl)
 end
