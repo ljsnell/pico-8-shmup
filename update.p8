@@ -402,15 +402,17 @@ function killen(myen)
 	del(enemies, myen)
 	sfx(2)
 	score+=100
-	
-	if rnd()<0.15 then
-		droppickup(myen.x, myen.y)
-	end
+	local cherchance=0.1
 
 	if myen.mission=="attac" then
 		if rnd()<0.5 then
 			pickattac()
 		end
+		cherchance=0.2
+	end
+
+	if rnd()<cherchance then
+		droppickup(myen.x, myen.y)
 	end
 end
 
@@ -418,7 +420,7 @@ function droppickup(pix,piy)
 	local mypick=make_spr()
 	mypick.x=pix
 	mypick.y=piy
-	mypick.sy=0.5
+	mypick.sy=0.75
 	mypick.spr=014
 	add(pickups, mypick)
 end
