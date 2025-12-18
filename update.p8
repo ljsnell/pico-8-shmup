@@ -397,6 +397,7 @@ function move(obj)
 end
 
 function killen(myen)
+	popfloat("100", myen.x+4, myen.y+4)
 	explode(myen.x+4,myen.y+4)
 	del(enemies, myen)
 	sfx(2)

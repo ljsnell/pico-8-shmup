@@ -247,7 +247,7 @@ function doshake()
 end
 
 function popfloat(fltxt, flx,fly)
-	local float={}
+	local fl={}
 	fl.x=flx
 	fl.y=fly
 	fl.txt=fltxt
