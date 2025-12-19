@@ -186,7 +186,7 @@ end
 
 function draw_start()
 	cls(1)
-	print("new schmup game", 30, 40, 12)
+	cprint("new schmup game", 64, 40, 12)
 	print("press any key to start", 30, 80, blink())
 end
 
@@ -254,4 +254,8 @@ function popfloat(fltxt, flx,fly)
 	fl.age=0
 
 	add(floats,fl)
+end
+
+function cprint(txt,x,y,c)
+	print(txt,x-#txt*2,y,c)
 end
