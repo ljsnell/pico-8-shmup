@@ -112,8 +112,12 @@ function draw_game()
 		drawspr(myebul)
 	end
     -- floats
-	for myfl in all(floats) do 
-		print(myfl.txt, myfl.x, myfl.y)
+	for myfl in all(floats) do
+		local mycol=7
+		if t%4<2 then
+			mycol=8
+		end
+		cprint(myfl.txt, myfl.x, myfl.y, mycol)
 		myfl.y-=0.5
 		myfl.age+=1
 		if myfl.age>60 then
