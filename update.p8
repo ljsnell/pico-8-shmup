@@ -110,6 +110,16 @@ function update_game()
 
 	end
 
+	-- cherry bomb
+	if btn(4) then
+		if cher>0 then
+			cherbomb(cher)
+			cher=0
+		else
+			sfx(04)
+		end
+	end
+
 	--fire bullet
 	if btn(5) then
 		if bultimer<=0 then
@@ -493,4 +503,23 @@ function aimedfire(myen,spd)
 
 	myebul.sx=sin(ang)*spd
 	myebul.sy=cos(ang)*spd
+end
+
+function cherbomb(cher)
+	local spc=1/(cher*2)
+
+	for i=1,cher*2 do
+		local ang=spc*i
+		local newbul=make_spr()
+		newbul.x=ship.x+1
+		newbul.y=ship.y-3
+		newbul.spr=5
+		newbul.sy=-4
+		
+		newbul.sx=sin(ang)*4
+		newbul.sy=cos(ang)*4
+
+		add(buls,newbul)
+	end
+	muzzle=4
 end
