@@ -111,7 +111,7 @@ function update_game()
 	end
 
 	-- cherry bomb
-	if btn(4) then
+	if btnp(4) then
 		if cher>0 then
 			cherbomb(cher)
 			cher=0
