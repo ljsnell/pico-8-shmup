@@ -528,4 +528,5 @@ function cherbomb(cher)
 	muzzle=4
 	shake=5
 	big_shwave(ship.x+3, ship.y+3)
+	invul=30
 end
