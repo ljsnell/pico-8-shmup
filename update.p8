@@ -129,7 +129,10 @@ function update_game()
 			newbul.spr=bulspr
 			newbul.colw=6
 			newbul.sy=-4
+			newbul.dmg=1
+
 			add(buls,newbul)
+
 			sfx(0)
 			bultimer=6
 			muzzle=4
@@ -186,7 +189,7 @@ function update_game()
 				del(buls, mybul)
 				smol_shwave(mybul.x+4, mybul.y+4)
 				smol_spark(myen.x+4, myen.y+4)
-				myen.hp-=1
+				myen.hp-=mybul.dmg
 				sfx(3)
 				myen.flash=5
 
@@ -506,15 +509,16 @@ function aimedfire(myen,spd)
 end
 
 function cherbomb(cher)
-	local spc=1/(cher*2)
+	local spc=0.25/(cher*2)
+	for i=0,cher*2 do
+		local ang=0.375  +spc*i
 
-	for i=1,cher*2 do
-		local ang=spc*i
 		local newbul=make_spr()
 		newbul.x=ship.x+1
 		newbul.y=ship.y-3
 		newbul.spr=5
 		newbul.sy=-4
+		newbul.dmg=3
 		
 		newbul.sx=sin(ang)*4
 		newbul.sy=cos(ang)*4
@@ -522,4 +526,6 @@ function cherbomb(cher)
 		add(buls,newbul)
 	end
 	muzzle=4
+	shake=5
+	big_shwave(ship.x+3, ship.y+3)
 end
