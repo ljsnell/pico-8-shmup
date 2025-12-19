@@ -397,7 +397,6 @@ function move(obj)
 end
 
 function killen(myen)
-	popfloat("100", myen.x+4, myen.y+4)
 	explode(myen.x+4,myen.y+4)
 	del(enemies, myen)
 	sfx(2)
@@ -409,6 +408,7 @@ function killen(myen)
 			pickattac()
 		end
 		cherchance=0.2
+		popfloat("100", myen.x+4, myen.y+4)
 	end
 
 	if rnd()<cherchance then
